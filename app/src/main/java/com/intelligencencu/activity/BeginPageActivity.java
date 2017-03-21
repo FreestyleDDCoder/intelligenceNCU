@@ -1,6 +1,7 @@
 package com.intelligencencu.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -103,7 +104,8 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             //点击登录界面,弹出登录界面
             case R.id.icon_image:
-
+                Intent intent = new Intent(BeginPageActivity.this, LoginActivity.class);
+                startActivity(intent);
                 break;
             //点击登出界面
             case R.id.logout:

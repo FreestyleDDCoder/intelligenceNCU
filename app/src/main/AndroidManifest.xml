@@ -28,7 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.intelligencencu.activity.BeginPageActivity" android:label="首页"/>
+        <activity android:name="com.intelligencencu.activity.BeginPageActivity" android:label="智慧南大"/>
+        <activity android:name="com.intelligencencu.activity.LoginActivity"/>
     </application>
 
 </manifest>

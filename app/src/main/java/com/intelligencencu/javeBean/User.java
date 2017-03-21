@@ -9,9 +9,10 @@ import cn.bmob.v3.BmobObject;
 
 public class User extends BmobObject {
     //这是用户信息的javaBean
+    //存放的数据表
     private String UserName;
     private String Password;
-    private int sex;
+    private Integer sex;
     private String mail;
     private String ImageUrl;
 
