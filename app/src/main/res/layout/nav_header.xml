@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/hd_user"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@mipmap/nav_header_bg"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
         android:id="@+id/icon_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -16,7 +15,7 @@
         android:padding="2dp"
         android:src="@mipmap/default_avatar_man" />
 
-    <TextView
+    <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
         android:id="@+id/tv_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +25,7 @@
         android:textColor="#fff"
         android:textSize="18sp" />
 
-    <ImageView
+    <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
         android:id="@+id/logout"
         android:layout_width="30dp"
         android:layout_height="30dp"
@@ -35,4 +34,4 @@
         android:padding="2dp"
         android:src="@mipmap/logout" />
 
-</LinearLayout>
+</dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
