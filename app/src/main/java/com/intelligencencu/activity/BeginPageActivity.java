@@ -3,10 +3,14 @@ package com.intelligencencu.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,6 +26,9 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.intelligencencu.Fragment.NewSchoolMateFragment;
+import com.intelligencencu.Fragment.SchoolNewsFragment;
+import com.intelligencencu.Fragment.SchoolYellowFragment;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.ToastUntil;
 
@@ -52,6 +59,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mNewclassmate;
     private SpringingImageView mSchoolyellow;
     private SpringingImageView mSchoolnews;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,15 +69,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         initUI();
         initSpringLayout();
         initEvent();
-        showViews();
-    }
-
-    private void initEvent() {
-
-    }
-
-    private void showViews() {
-//
     }
 
     //用于展现效果
@@ -83,13 +82,18 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initUI() {
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+        }
         //用于记录当前的登录状态
         mSpfs = getSharedPreferences("config", MODE_PRIVATE);
         mdrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNav_view = (NavigationView) findViewById(R.id.nav_view);
-
         //注意不是当前ContentView是不可以直接使用findViewById的
         View headerView = mNav_view.getHeaderView(0);
         mIcon_image = (SpringingImageView) headerView.findViewById(R.id.icon_image);
@@ -101,12 +105,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mSchoolyellow = (SpringingImageView) findViewById(R.id.schoolyellow);
         mSchoolnews = (SpringingImageView) findViewById(R.id.schoolnews);
 
-
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
-        }
         mNav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -128,9 +126,15 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 return true;
             }
         });
+    }
+
+    private void initEvent() {
         mTv_state.setOnClickListener(this);
         mIcon_image.setOnClickListener(this);
         mLogout.setOnClickListener(this);
+        mNewclassmate.setOnClickListener(this);
+        mSchoolyellow.setOnClickListener(this);
+        mSchoolnews.setOnClickListener(this);
     }
 
     //加载菜单的方法
@@ -162,40 +166,73 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             //点击登录界面,弹出登录界面
             case R.id.icon_image:
-                goToLoginActivity();
+                gotoLoginActivity();
                 break;
             case R.id.tv_state:
-                goToLoginActivity();
+                gotoLoginActivity();
                 break;
             //点击登出界面
             case R.id.logout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("退出登录");
-                builder.setMessage("是否确认退出登录？");
-                builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //判断是否登录
-                        if (mSpfs.getBoolean("isLogin", false)) {
-                            mSpfs.edit().putBoolean("isLogin", false);
-                        } else {
-                            ToastUntil.showShortToast(BeginPageActivity.this, "请先登录！");
-                        }
-                    }
-                });
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
+                gotoLoginOut();
                 break;
-
+            case R.id.newclassmate:
+                replaceFragment(new NewSchoolMateFragment());
+                mToolbar.setTitle("新生导航");
+                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+            case R.id.schoolyellow:
+                replaceFragment(new SchoolYellowFragment());
+                mToolbar.setTitle("校园生活");
+                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
+            case R.id.schoolnews:
+                replaceFragment(new SchoolNewsFragment());
+                mToolbar.setTitle("学校新闻");
+                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                break;
         }
     }
 
-    private void goToLoginActivity() {
+    //登出逻辑
+    private void gotoLoginOut() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("退出登录");
+        builder.setMessage("是否确认退出登录？");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //判断是否登录
+                if (mSpfs.getBoolean("isLogin", false)) {
+                    mSpfs.edit().putBoolean("isLogin", false);
+                } else {
+                    ToastUntil.showShortToast(BeginPageActivity.this, "请先登录！");
+                }
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+
+    //替换fragment
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fl_beginPage, fragment);
+        transaction.commit();
+    }
+
+    private void gotoLoginActivity() {
         Intent intent = new Intent(BeginPageActivity.this, LoginActivity.class);
         startActivity(intent);
     }

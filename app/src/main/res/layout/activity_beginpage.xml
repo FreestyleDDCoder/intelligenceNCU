@@ -32,18 +32,21 @@
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:background="#FFF"
                 android:src="@mipmap/newclassmate"/>
             <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
                 android:id="@+id/schoolyellow"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:background="#FFF"
                 android:src="@mipmap/schoolyellow"/>
             <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
                 android:id="@+id/schoolnews"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_weight="1"
+                android:background="#FFF"
                 android:src="@mipmap/schoolnews"/>
         </LinearLayout>
     </LinearLayout>
