@@ -118,6 +118,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                     //点击主页时的变化
                     case R.id.nav_main:
                         mdrawer_layout.closeDrawers();
+                        mToolbar.setTitle("智慧南大");
                         break;
                     //点击设置
                     case R.id.nav_setting:
