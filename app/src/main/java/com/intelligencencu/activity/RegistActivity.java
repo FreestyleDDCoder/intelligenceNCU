@@ -90,9 +90,11 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            //返回按钮
             case R.id.simg_back2:
                 finish();
                 break;
+            //设置头像
             case R.id.simg_avatarMan2:
                 break;
             case R.id.stv_regist:

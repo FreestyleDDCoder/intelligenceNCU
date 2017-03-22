@@ -15,9 +15,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.intelligencencu.intelligencencu.R;
@@ -46,6 +48,10 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mLogout;
     private SharedPreferences mSpfs;
     private SpringingTextView mTv_state;
+    private FrameLayout mFl_beginPage;
+    private SpringingImageView mNewclassmate;
+    private SpringingImageView mSchoolyellow;
+    private SpringingImageView mSchoolnews;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +77,9 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mTv_state.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mTv_state));
         mLogout.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mLogout).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mIcon_image.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mIcon_image).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
-
+        mNewclassmate.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mNewclassmate).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
+        mSchoolyellow.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolyellow).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
+        mSchoolnews.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolnews).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
     }
 
     private void initUI() {
@@ -88,6 +96,11 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mIcon_image.setIsCircleImage(true);
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
         mTv_state = (SpringingTextView) headerView.findViewById(R.id.tv_state);
+        mFl_beginPage = (FrameLayout) findViewById(R.id.fl_beginPage);
+        mNewclassmate = (SpringingImageView) findViewById(R.id.newclassmate);
+        mSchoolyellow = (SpringingImageView) findViewById(R.id.schoolyellow);
+        mSchoolnews = (SpringingImageView) findViewById(R.id.schoolnews);
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -120,11 +133,25 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mLogout.setOnClickListener(this);
     }
 
+    //加载菜单的方法
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    //菜单点击事件
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 mdrawer_layout.openDrawer(GravityCompat.START);
+                break;
+            case R.id.baidumap:
+                break;
+            case R.id.schoolpresentation:
+                break;
+            case R.id.schoolview:
                 break;
         }
         return true;
