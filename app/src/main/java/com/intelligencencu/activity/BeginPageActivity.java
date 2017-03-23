@@ -60,7 +60,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mSchoolyellow;
     private SpringingImageView mSchoolnews;
     private Toolbar mToolbar;
-    private SpringingLinearLayout mSl_beginPage;
+//    private SpringingLinearLayout mSl_beginPage;
     private SpringingImageView mSi_beginBackground;
 
     @Override
@@ -74,16 +74,16 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
 //        showViews();
     }
 
-    private void showViews() {
-        new SpringingAlphaShowHandler(this, mSl_beginPage).showChildrenSequence(500, 100);
-        new SpringingTranslationShowHandler(this, mSl_beginPage).showChildrenSequence(500, 100);
-    }
+//    private void showViews() {
+//        new SpringingAlphaShowHandler(this, mSl_beginPage).showChildrenSequence(500, 100);
+//        new SpringingTranslationShowHandler(this, mSl_beginPage).showChildrenSequence(500, 100);
+//    }
 
     //用于展现效果
     private void initSpringLayout() {
         mTv_state.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mTv_state));
         mLogout.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mLogout).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
-//        mSl_beginPage.getSpringingHandlerController().addSpringingHandler(new SpringingTouchDragHandler(this, mSl_beginPage).setBackInterpolator(new OvershootInterpolator()).setBackDuration(SpringingTouchDragHandler.DURATION_LONG).setDirection(SpringingTouchDragHandler.DIRECTOR_BOTTOM | SpringingTouchDragHandler.DIRECTOR_TOP).setMinDistance(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())));
+       // mSl_beginPage.getSpringingHandlerController().addSpringingHandler(new SpringingTouchDragHandler(this, mSl_beginPage).setBackInterpolator(new OvershootInterpolator()).setBackDuration(SpringingTouchDragHandler.DURATION_LONG).setDirection(SpringingTouchDragHandler.DIRECTOR_BOTTOM | SpringingTouchDragHandler.DIRECTOR_TOP).setMinDistance(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())));
 
         mIcon_image.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mIcon_image).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mNewclassmate.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mNewclassmate).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
@@ -105,6 +105,8 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mSpfs = getSharedPreferences("config", MODE_PRIVATE);
         mdrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNav_view = (NavigationView) findViewById(R.id.nav_view);
+//        mSl_beginPage = (SpringingLinearLayout) findViewById(R.id.sl_beginPage);
+
         //注意不是当前ContentView是不可以直接使用findViewById的
         View headerView = mNav_view.getHeaderView(0);
         mIcon_image = (SpringingImageView) headerView.findViewById(R.id.icon_image);
@@ -114,8 +116,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mFl_beginPage = (FrameLayout) findViewById(R.id.fl_beginPage);
 
         mSi_beginBackground = (SpringingImageView) findViewById(R.id.si_beginBackground);
-
-//        mSl_beginPage = (SpringingLinearLayout) findViewById(R.id.sl_beginPage);
 
         mNewclassmate = (SpringingImageView) findViewById(R.id.newclassmate);
         mSchoolyellow = (SpringingImageView) findViewById(R.id.schoolyellow);
@@ -136,12 +136,18 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 switch (item.getItemId()) {
                     //点击主页时的变化
                     case R.id.nav_main:
-                        mdrawer_layout.closeDrawers();
-                        mToolbar.setTitle("智慧南大");
-                        mSi_beginBackground.setVisibility(View.VISIBLE);
+                        startActivity(new Intent(BeginPageActivity.this, BeginPageActivity.class));
+//                        mdrawer_layout.closeDrawers();
+//
+//                        mToolbar.setTitle("智慧南大");
+//                        mSi_beginBackground.setVisibility(View.VISIBLE);
+//                        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+//                        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+//                        mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                         break;
                     //点击设置
                     case R.id.nav_setting:
+
                         break;
                 }
                 return true;
@@ -172,11 +178,14 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case android.R.id.home:
                 mdrawer_layout.openDrawer(GravityCompat.START);
                 break;
+            //地图
             case R.id.baidumap:
                 gotoBaiduMap();
                 break;
+            //学校概况
             case R.id.schoolpresentation:
                 break;
+            //校园风光
             case R.id.schoolview:
                 break;
         }
@@ -184,7 +193,8 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void gotoBaiduMap() {
-
+        Intent intent = new Intent(BeginPageActivity.this, MapActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -204,7 +214,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.newclassmate:
                 replaceFragment(new NewSchoolMateFragment());
                 mToolbar.setTitle("新生导航");
-                mSi_beginBackground.setVisibility(View.INVISIBLE);
+                mSi_beginBackground.setVisibility(View.GONE);
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
@@ -212,7 +222,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.schoolyellow:
                 replaceFragment(new SchoolYellowFragment());
                 mToolbar.setTitle("校园生活");
-                mSi_beginBackground.setVisibility(View.INVISIBLE);
+                mSi_beginBackground.setVisibility(View.GONE);
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
@@ -220,7 +230,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.schoolnews:
                 replaceFragment(new SchoolNewsFragment());
                 mToolbar.setTitle("学校新闻");
-                mSi_beginBackground.setVisibility(View.INVISIBLE);
+                mSi_beginBackground.setVisibility(View.GONE);
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));

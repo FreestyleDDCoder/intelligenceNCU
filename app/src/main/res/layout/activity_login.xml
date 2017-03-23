@@ -44,6 +44,7 @@
             android:layout_marginTop="60dp"
             android:src="@mipmap/default_avatar_man"
             android:visibility="invisible" />
+
         <LinearLayout
             android:id="@+id/ll_account"
             android:layout_width="250dp"
@@ -120,7 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/tv_noregist"
