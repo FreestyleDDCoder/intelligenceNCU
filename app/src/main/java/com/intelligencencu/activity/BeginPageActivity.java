@@ -29,9 +29,11 @@ import android.widget.ImageView;
 import com.intelligencencu.Fragment.NewSchoolMateFragment;
 import com.intelligencencu.Fragment.SchoolNewsFragment;
 import com.intelligencencu.Fragment.SchoolYellowFragment;
+import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.ToastUntil;
 
+import cn.bmob.v3.BmobUser;
 import de.hdodenhof.circleimageview.CircleImageView;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaShowHandler;
@@ -60,7 +62,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mSchoolyellow;
     private SpringingImageView mSchoolnews;
     private Toolbar mToolbar;
-//    private SpringingLinearLayout mSl_beginPage;
+    //    private SpringingLinearLayout mSl_beginPage;
     private SpringingImageView mSi_beginBackground;
 
     @Override
@@ -83,7 +85,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private void initSpringLayout() {
         mTv_state.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mTv_state));
         mLogout.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mLogout).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
-       // mSl_beginPage.getSpringingHandlerController().addSpringingHandler(new SpringingTouchDragHandler(this, mSl_beginPage).setBackInterpolator(new OvershootInterpolator()).setBackDuration(SpringingTouchDragHandler.DURATION_LONG).setDirection(SpringingTouchDragHandler.DIRECTOR_BOTTOM | SpringingTouchDragHandler.DIRECTOR_TOP).setMinDistance(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())));
+        // mSl_beginPage.getSpringingHandlerController().addSpringingHandler(new SpringingTouchDragHandler(this, mSl_beginPage).setBackInterpolator(new OvershootInterpolator()).setBackDuration(SpringingTouchDragHandler.DURATION_LONG).setDirection(SpringingTouchDragHandler.DIRECTOR_BOTTOM | SpringingTouchDragHandler.DIRECTOR_TOP).setMinDistance(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())));
 
         mIcon_image.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mIcon_image).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mNewclassmate.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mNewclassmate).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
@@ -177,6 +179,18 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (item.getItemId()) {
             case android.R.id.home:
                 mdrawer_layout.openDrawer(GravityCompat.START);
+
+//                通过获取这个缓存的用户对象来进行登录
+                User currentUser = BmobUser.getCurrentUser(User.class);
+                if (currentUser != null) {
+                    Boolean sex = currentUser.getSex();
+                    String username = currentUser.getUsername();
+                    if (sex) {
+                        mTv_state.setText(username + "\n" + "男");
+                    } else {
+                        mTv_state.setText(username + "\n" + "女");
+                    }
+                }
                 break;
             //地图
             case R.id.baidumap:
@@ -247,8 +261,10 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //判断是否登录
-                if (mSpfs.getBoolean("isLogin", false)) {
-                    mSpfs.edit().putBoolean("isLogin", false);
+                User currentUser = BmobUser.getCurrentUser(User.class);
+                if (currentUser != null) {
+                    currentUser.logOut();   //清除缓存用户对象
+                    mTv_state.setText("点击登录");
                 } else {
                     ToastUntil.showShortToast(BeginPageActivity.this, "请先登录！");
                 }
@@ -263,6 +279,23 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         builder.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        User currentUser = BmobUser.getCurrentUser(User.class);
+        if (currentUser != null) {
+            Boolean sex = currentUser.getSex();
+            String username = currentUser.getUsername();
+            if (sex) {
+                mTv_state.setText(username + "  " + "男");
+            } else {
+                mTv_state.setText(username + "  " + "女");
+            }
+        } else {
+            mTv_state.setText("点击登录");
+        }
+    }
+
     //替换fragment
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -272,8 +305,14 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void gotoLoginActivity() {
-        Intent intent = new Intent(BeginPageActivity.this, LoginActivity.class);
-        startActivity(intent);
+        User currentUser = BmobUser.getCurrentUser(User.class);
+        if (currentUser != null) {
+            //如果已经登录，则点击头像时修改资料
+        } else {
+            Intent intent = new Intent(BeginPageActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     private void initData() {

@@ -9,7 +9,7 @@
         android:id="@+id/srl_actionBar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#0099ff"
+        android:background="?attr/colorPrimary"
         android:translationZ="8dp">
 
         <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
@@ -68,8 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:hint="请输入你的用户名"
-                android:inputType="number"
+                android:hint="用户名或邮箱号码"
                 android:textColor="#666666"
                 android:textSize="18sp" />
         </LinearLayout>

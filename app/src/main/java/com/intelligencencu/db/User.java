@@ -1,4 +1,4 @@
-package com.intelligencencu.javeBean;
+package com.intelligencencu.db;
 
 import cn.bmob.v3.BmobUser;
 

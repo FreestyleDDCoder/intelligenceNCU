@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
@@ -13,8 +14,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.MD5Utils;
+import com.intelligencencu.utils.ToastUntil;
 
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.LogInListener;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaHideHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaShowHandler;
@@ -95,23 +102,47 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.stv_login: {
-
-            }
-            break;
-            case R.id.tv_noregist: {
+            case R.id.stv_login:
+                String account = sedt_account.getText().toString();
+                String password = sedt_password.getText().toString();
+                if (TextUtils.isEmpty(account)) {
+                    ToastUntil.showShortToast(LoginActivity.this, "账号不能为空！");
+                } else if (TextUtils.isEmpty(password)) {
+                    ToastUntil.showShortToast(LoginActivity.this, "密码不能为空！");
+                } else {
+                    gotoLogin(account, password);
+                }
+                break;
+            case R.id.tv_noregist:
                 gotoRegister();
-            }
-            break;
-            case R.id.tv_forgetpassword: {
-
-            }
-            break;
-            case R.id.simg_back: {
+                break;
+            case R.id.tv_forgetpassword:
+                gotoResetPassword();
+                break;
+            case R.id.simg_back:
                 finish();
-            }
-            break;
+                break;
         }
+    }
+
+    //密码重置功能
+    private void gotoResetPassword() {
+        startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+    }
+
+    private void gotoLogin(String account, String password) {
+        BmobUser.loginByAccount(account, MD5Utils.MD5Encryption(password), new LogInListener<User>() {
+            @Override
+            public void done(User user, BmobException e) {
+                if (user != null) {
+                    //登录成功
+                    ToastUntil.showShortToast(LoginActivity.this, "登录成功！");
+                    finish();
+                } else {
+                    ToastUntil.showShortToast(LoginActivity.this,"账号或密码有误！请重试！");
+                }
+            }
+        });
     }
 
     private void gotoRegister() {
