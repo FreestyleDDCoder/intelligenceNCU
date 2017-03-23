@@ -57,7 +57,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mLogout;
     private SharedPreferences mSpfs;
     private SpringingTextView mTv_state;
-    private FrameLayout mFl_beginPage;
     private SpringingImageView mNewclassmate;
     private SpringingImageView mSchoolyellow;
     private SpringingImageView mSchoolnews;
@@ -115,7 +114,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mIcon_image.setIsCircleImage(true);
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
         mTv_state = (SpringingTextView) headerView.findViewById(R.id.tv_state);
-        mFl_beginPage = (FrameLayout) findViewById(R.id.fl_beginPage);
 
         mSi_beginBackground = (SpringingImageView) findViewById(R.id.si_beginBackground);
 

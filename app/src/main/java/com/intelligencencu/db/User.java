@@ -16,10 +16,19 @@ import cn.bmob.v3.BmobUser;
 
 public class User extends BmobUser {
     //这是用户信息的javaBean
-    //存放的数据表(性别、年龄、头像)
+    //存放的数据表(性别、年龄、头像,个性名称)
     private Boolean sex;
     private String nick;
     private Integer age;
+    private String chinesename;
+
+    public String getChinesename() {
+        return chinesename;
+    }
+
+    public void setChinesename(String chinesename) {
+        this.chinesename = chinesename;
+    }
 
     public Boolean getSex() {
         return sex;

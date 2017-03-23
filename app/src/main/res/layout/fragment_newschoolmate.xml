@@ -1,10 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="hehehehehehheheheh"/>
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_calendar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/siv_calendar"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:src="@mipmap/calendar" />
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="日历"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_school_car"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/siv_school_car"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:src="@mipmap/school_car" />
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="校车"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_weather"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/siv_weather"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:src="@mipmap/weather" />
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="天气"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_icn_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/siv_icn_4"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:src="@mipmap/icn_4" />
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="待续"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout
+        android:id="@+id/fl_newSchoolmate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 </LinearLayout>
