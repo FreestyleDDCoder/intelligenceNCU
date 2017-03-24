@@ -13,7 +13,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:padding="2dp"
-        android:src="@mipmap/default_avatar_man" />
+        android:background="@mipmap/default_avatar_man"/>
 
     <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
         android:id="@+id/tv_state"

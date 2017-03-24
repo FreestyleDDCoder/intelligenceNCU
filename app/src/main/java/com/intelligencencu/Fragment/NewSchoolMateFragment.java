@@ -81,7 +81,7 @@ public class NewSchoolMateFragment extends Fragment {
                 msiv_school_car.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
-
+                replaceFragment(new SchoolCarFragment());
             }
         });
         msiv_weather.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +91,7 @@ public class NewSchoolMateFragment extends Fragment {
                 msiv_school_car.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
+                replaceFragment(new WeatherFragment());
 
             }
         });
@@ -101,6 +102,7 @@ public class NewSchoolMateFragment extends Fragment {
                 msiv_school_car.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                replaceFragment(new MoreFragment());
             }
         });
     }

@@ -26,11 +26,13 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.intelligencencu.Fragment.BeginPageFragment;
 import com.intelligencencu.Fragment.NewSchoolMateFragment;
 import com.intelligencencu.Fragment.SchoolNewsFragment;
 import com.intelligencencu.Fragment.SchoolYellowFragment;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.ToastUntil;
 
 import cn.bmob.v3.BmobUser;
@@ -55,30 +57,20 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private NavigationView mNav_view;
     private SpringingImageView mIcon_image;
     private SpringingImageView mLogout;
-    private SharedPreferences mSpfs;
     private SpringingTextView mTv_state;
     private SpringingImageView mNewclassmate;
     private SpringingImageView mSchoolyellow;
     private SpringingImageView mSchoolnews;
     private Toolbar mToolbar;
-    //    private SpringingLinearLayout mSl_beginPage;
-    private SpringingImageView mSi_beginBackground;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginpage);
-
         initUI();
         initSpringLayout();
         initEvent();
-//        showViews();
     }
-
-//    private void showViews() {
-//        new SpringingAlphaShowHandler(this, mSl_beginPage).showChildrenSequence(500, 100);
-//        new SpringingTranslationShowHandler(this, mSl_beginPage).showChildrenSequence(500, 100);
-//    }
 
     //用于展现效果
     private void initSpringLayout() {
@@ -90,7 +82,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mNewclassmate.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mNewclassmate).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mSchoolyellow.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolyellow).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mSchoolnews.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolnews).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
-        mSi_beginBackground.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSi_beginBackground).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
     }
 
     private void initUI() {
@@ -102,11 +93,9 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
         }
-        //用于记录当前的登录状态
-        mSpfs = getSharedPreferences("config", MODE_PRIVATE);
+
         mdrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mNav_view = (NavigationView) findViewById(R.id.nav_view);
-//        mSl_beginPage = (SpringingLinearLayout) findViewById(R.id.sl_beginPage);
 
         //注意不是当前ContentView是不可以直接使用findViewById的
         View headerView = mNav_view.getHeaderView(0);
@@ -115,14 +104,26 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
         mTv_state = (SpringingTextView) headerView.findViewById(R.id.tv_state);
 
-        mSi_beginBackground = (SpringingImageView) findViewById(R.id.si_beginBackground);
-
         mNewclassmate = (SpringingImageView) findViewById(R.id.newclassmate);
         mSchoolyellow = (SpringingImageView) findViewById(R.id.schoolyellow);
         mSchoolnews = (SpringingImageView) findViewById(R.id.schoolnews);
-//        mSchoolyellow.setIsCircleImage(true);
-//        mNewclassmate.setIsCircleImage(true);
-//        mSchoolnews.setIsCircleImage(true);
+
+        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+        mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+        replaceFragment(new BeginPageFragment());
+
+        // 通过获取这个缓存的用户对象来进行登录
+        IsLogin isLogin = new IsLogin();
+        if (isLogin.isLogin()) {
+            Boolean sex = isLogin.getUser().getSex();
+            String username = isLogin.getUser().getUsername();
+            if (sex) {
+                mTv_state.setText(username + "\n" + "男");
+            } else {
+                mTv_state.setText(username + "\n" + "女");
+            }
+        }
 
         mNav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -136,10 +137,13 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 switch (item.getItemId()) {
                     //点击主页时的变化
                     case R.id.nav_main:
-                        startActivity(new Intent(BeginPageActivity.this, BeginPageActivity.class));
-//                        mdrawer_layout.closeDrawers();
-//
-//                        mToolbar.setTitle("智慧南大");
+                        mdrawer_layout.closeDrawers();
+                        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+                        mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                        mToolbar.setTitle("智慧南大");
+                        replaceFragment(new BeginPageFragment());
+
 //                        mSi_beginBackground.setVisibility(View.VISIBLE);
 //                        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
 //                        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
@@ -153,10 +157,11 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 return true;
             }
         });
+
     }
 
     private void initEvent() {
-        mTv_state.setOnClickListener(this);
+//        mTv_state.setOnClickListener(this);
         mIcon_image.setOnClickListener(this);
         mLogout.setOnClickListener(this);
         mNewclassmate.setOnClickListener(this);
@@ -177,22 +182,15 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (item.getItemId()) {
             case android.R.id.home:
                 mdrawer_layout.openDrawer(GravityCompat.START);
-
-//                通过获取这个缓存的用户对象来进行登录
-                User currentUser = BmobUser.getCurrentUser(User.class);
-                if (currentUser != null) {
-                    Boolean sex = currentUser.getSex();
-                    String username = currentUser.getUsername();
-                    if (sex) {
-                        mTv_state.setText(username + "\n" + "男");
-                    } else {
-                        mTv_state.setText(username + "\n" + "女");
-                    }
-                }
                 break;
             //地图
             case R.id.baidumap:
-                gotoBaiduMap();
+                if (new IsLogin().isLogin()) {
+                    gotoBaiduMap();
+                } else {
+                    ToastUntil.showShortToast(BeginPageActivity.this, "请先登录再使用本功能！");
+                    gotoLoginActivity();
+                }
                 break;
             //学校概况
             case R.id.schoolpresentation:
@@ -214,10 +212,12 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (v.getId()) {
             //点击登录界面,弹出登录界面
             case R.id.icon_image:
-                gotoLoginActivity();
-                break;
-            case R.id.tv_state:
-                gotoLoginActivity();
+                if (new IsLogin().isLogin()) {
+                    //如果已经登录则点击查看详细资料并进行修改
+                } else {
+                    gotoLoginActivity();
+                }
+
                 break;
             //点击登出界面
             case R.id.logout:
@@ -226,7 +226,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.newclassmate:
                 replaceFragment(new NewSchoolMateFragment());
                 mToolbar.setTitle("新生导航");
-                mSi_beginBackground.setVisibility(View.GONE);
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
@@ -234,7 +233,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.schoolyellow:
                 replaceFragment(new SchoolYellowFragment());
                 mToolbar.setTitle("校园生活");
-                mSi_beginBackground.setVisibility(View.GONE);
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
@@ -242,7 +240,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.schoolnews:
                 replaceFragment(new SchoolNewsFragment());
                 mToolbar.setTitle("学校新闻");
-                mSi_beginBackground.setVisibility(View.GONE);
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
@@ -258,10 +255,8 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //判断是否登录
-                User currentUser = BmobUser.getCurrentUser(User.class);
-                if (currentUser != null) {
-                    currentUser.logOut();   //清除缓存用户对象
+                if (new IsLogin().isLogin()) {
+                    BmobUser.logOut();   //清除缓存用户对象
                     mTv_state.setText("点击登录");
                 } else {
                     ToastUntil.showShortToast(BeginPageActivity.this, "请先登录！");
@@ -303,14 +298,8 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void gotoLoginActivity() {
-        User currentUser = BmobUser.getCurrentUser(User.class);
-        if (currentUser != null) {
-            //如果已经登录，则点击头像时修改资料
-        } else {
-            Intent intent = new Intent(BeginPageActivity.this, LoginActivity.class);
-            startActivity(intent);
-        }
-
+        Intent intent = new Intent(BeginPageActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void initData() {

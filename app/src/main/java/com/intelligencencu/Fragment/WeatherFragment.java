@@ -6,20 +6,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 
 import com.intelligencencu.intelligencencu.R;
 
 /**
- * Created by liangzhan on 17-3-23.
- * 日历Fragment
+ * Created by liangzhan on 17-3-24.
+ * 天气Fragment
  */
 
-public class CalenderFragment extends Fragment {
+public class WeatherFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calender, container, false);
+        View view = inflater.inflate(R.layout.fragment_weather, container, false);
         return view;
     }
 }

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
     <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
         android:id="@+id/sl_beginPage"
         android:layout_width="match_parent"
@@ -25,41 +26,36 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/si_beginBackground"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/indexbg"
-                />
+
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                    android:layout_weight="1"
-                    android:id="@+id/newclassmate"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/newclassmate" />
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/newclassmate"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="#FFF"
+                android:src="@mipmap/newclassmate" />
 
-                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                    android:layout_weight="1"
-                    android:id="@+id/schoolyellow"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/schoolyellow" />
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/schoolyellow"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="#FFF"
+                android:src="@mipmap/schoolyellow" />
 
-                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                    android:layout_weight="1"
-                    android:id="@+id/schoolnews"
-                    android:layout_width="0dp"
-                    android:layout_height="45dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/schoolnews" />
+            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                android:id="@+id/schoolnews"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:background="#FFF"
+                android:src="@mipmap/schoolnews" />
         </LinearLayout>
     </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
 
@@ -70,5 +66,4 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu" />
-
 </android.support.v4.widget.DrawerLayout>

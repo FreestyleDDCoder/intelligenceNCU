@@ -23,6 +23,7 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaShowHandler;
+import dym.unique.com.springinglayoutlibrary.handler.SpringingNotificationRotateHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchDragHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchPointHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchScaleHandler;
@@ -65,6 +66,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     private void showViews() {
         new SpringingAlphaShowHandler(this, mSll_mainContainer).showChildrenSequence(500, 100);
         new SpringingTranslationShowHandler(this, mSll_mainContainer).showChildrenSequence(500, 100);
+        new SpringingNotificationRotateHandler(this, mSimg_avatarMan).start(1);
     }
 
     private void initEvent() {

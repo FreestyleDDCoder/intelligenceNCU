@@ -4,8 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <CalendarView
-        android:id="@+id/datePicker"
+    <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+        android:id="@+id/si_beginBackground"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+       />
+
 </LinearLayout>
