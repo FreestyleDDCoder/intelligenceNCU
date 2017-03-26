@@ -3,11 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <WebView
-        android:id="@+id/wv_beginPage"
+        android:id="@+id/wv_schoolmessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </WebView>
+    <ProgressBar
+        android:id="@+id/pb_message"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</FrameLayout>
 
 </LinearLayout>

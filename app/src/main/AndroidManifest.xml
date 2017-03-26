@@ -33,8 +33,7 @@
         <!--地图-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="7F0zUfplkKyOq2EhGfSehcDEoNqtrynn"
-            />
+            android:value="7F0zUfplkKyOq2EhGfSehcDEoNqtrynn" />
 
 
         <activity android:name="com.intelligencencu.activity.SplashActivity">
@@ -49,13 +48,16 @@
             android:label="智慧南大" />
         <activity android:name="com.intelligencencu.activity.LoginActivity" />
         <activity android:name="com.intelligencencu.activity.RegistActivity" />
-        <activity android:name="com.intelligencencu.activity.MapActivity" android:label="校园地图"/>
-        <activity android:name="com.intelligencencu.activity.ResetPasswordActivity"/>
+        <activity
+            android:name="com.intelligencencu.activity.MapActivity"
+            android:label="校园地图" />
+        <activity android:name="com.intelligencencu.activity.ResetPasswordActivity" />
 
         <!--地图-->
-        <service android:name="com.baidu.location.f" android:enabled="true"
-            android:process=":remote">
-        </service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
     </application>
 
 </manifest>

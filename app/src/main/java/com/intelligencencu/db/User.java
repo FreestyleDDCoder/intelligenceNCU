@@ -1,6 +1,11 @@
 package com.intelligencencu.db;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by liangzhan on 17-3-21.
@@ -18,16 +23,27 @@ public class User extends BmobUser {
     //这是用户信息的javaBean
     //存放的数据表(性别、年龄、头像,个性名称)
     private Boolean sex;
-    private String nick;
-    private Integer age;
-    private String chinesename;
+    //头像图片
+    private BmobFile image;
 
-    public String getChinesename() {
-        return chinesename;
+    private String signature;
+
+    private BmobRelation favorite;
+
+    public String getSignature() {
+        return signature;
     }
 
-    public void setChinesename(String chinesename) {
-        this.chinesename = chinesename;
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public BmobRelation getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(BmobRelation favorite) {
+        this.favorite = favorite;
     }
 
     public Boolean getSex() {
@@ -38,19 +54,11 @@ public class User extends BmobUser {
         this.sex = sex;
     }
 
-    public String getNick() {
-        return nick;
+    public BmobFile getImage() {
+        return image;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setImage(BmobFile image) {
+        this.image = image;
     }
 }

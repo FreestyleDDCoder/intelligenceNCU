@@ -11,8 +11,11 @@ import cn.bmob.v3.BmobUser;
 public class IsLogin {
     private User currentUser;
 
-    public boolean isLogin() {
+    public IsLogin() {
         currentUser = BmobUser.getCurrentUser(User.class);
+    }
+
+    public boolean isLogin() {
         if (currentUser != null) {
             return true;
         } else {

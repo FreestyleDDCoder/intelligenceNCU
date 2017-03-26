@@ -1,6 +1,5 @@
 package com.intelligencencu.Fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,24 +16,24 @@ import android.widget.ProgressBar;
 import com.intelligencencu.intelligencencu.R;
 
 /**
- * Created by liangzhan on 17-3-24.
- * 天气Fragment
+ * Created by liangzhan on 17-3-26.
+ * 学校概况
  */
 
-public class WeatherFragment extends Fragment {
+public class SchoolMessageFragment extends Fragment {
 
-    private ProgressBar pb_weather;
+    private ProgressBar pb_message;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_weather, container, false);
+        View view = inflater.inflate(R.layout.fragment_schoolmessage, container, false);
         final long startTime = System.currentTimeMillis();
-        pb_weather = (ProgressBar) view.findViewById(R.id.pb_weather);
-        WebView wv_weather = (WebView) view.findViewById(R.id.wv_weather);
-        wv_weather.getSettings().setJavaScriptEnabled(true);
-        wv_weather.setWebViewClient(new WebViewClient());
-        wv_weather.loadUrl("https://www.yahoo.com/news/weather/");
+        pb_message = (ProgressBar) view.findViewById(R.id.pb_message);
+        WebView wv_schoolmessage = (WebView) view.findViewById(R.id.wv_schoolmessage);
+        wv_schoolmessage.getSettings().setJavaScriptEnabled(true);
+        wv_schoolmessage.setWebViewClient(new WebViewClient());
+        wv_schoolmessage.loadUrl("http://www.ncu.edu.cn/xxgk/xxjj.html");
         new Thread() {
             @Override
             public void run() {
@@ -53,11 +52,11 @@ public class WeatherFragment extends Fragment {
         return view;
     }
 
-    public Handler handler=new Handler(){
+    public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            pb_weather.setVisibility(View.GONE);
+            pb_message.setVisibility(View.GONE);
         }
     };
 }

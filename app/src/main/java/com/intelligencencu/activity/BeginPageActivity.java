@@ -1,10 +1,12 @@
 package com.intelligencencu.activity;
 
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -18,33 +20,38 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.intelligencencu.Fragment.BeginPageFragment;
 import com.intelligencencu.Fragment.NewSchoolMateFragment;
+import com.intelligencencu.Fragment.SchoolMessageFragment;
 import com.intelligencencu.Fragment.SchoolNewsFragment;
 import com.intelligencencu.Fragment.SchoolYellowFragment;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.ToastUntil;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DownloadFileListener;
+import cn.bmob.v3.listener.QueryListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
-import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaShowHandler;
-import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchDragHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchPointHandler;
-import dym.unique.com.springinglayoutlibrary.handler.SpringingTranslationShowHandler;
 import dym.unique.com.springinglayoutlibrary.view.SpringingImageView;
 import dym.unique.com.springinglayoutlibrary.view.SpringingTextView;
-import dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout;
 
 /**
  * Created by liangzhan on 17-3-21.
@@ -56,6 +63,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private DrawerLayout mdrawer_layout;
     private NavigationView mNav_view;
     private SpringingImageView mIcon_image;
+    //    private CircleImageView mIcon_image;
     private SpringingImageView mLogout;
     private SpringingTextView mTv_state;
     private SpringingImageView mNewclassmate;
@@ -70,7 +78,26 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         initUI();
         initSpringLayout();
         initEvent();
+        //启动时配置默认信息
+        initPersonalInfo();
+        Log.d("onCreate", "onCreate");
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        //回到页面时再进行配置启动时配置默认信息
+        //要理解生命周期的
+        initPersonalInfo();
+        Log.d("onRestart", "onRestart");
+    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        initPersonalInfo();
+//        Log.d("onStart", "onStart");
+//    }
 
     //用于展现效果
     private void initSpringLayout() {
@@ -99,6 +126,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
 
         //注意不是当前ContentView是不可以直接使用findViewById的
         View headerView = mNav_view.getHeaderView(0);
+//        mIcon_image = (CircleImageView) headerView.findViewById(R.id.icon_image);
         mIcon_image = (SpringingImageView) headerView.findViewById(R.id.icon_image);
         mIcon_image.setIsCircleImage(true);
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
@@ -112,18 +140,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
         mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
         replaceFragment(new BeginPageFragment());
-
-        // 通过获取这个缓存的用户对象来进行登录
-        IsLogin isLogin = new IsLogin();
-        if (isLogin.isLogin()) {
-            Boolean sex = isLogin.getUser().getSex();
-            String username = isLogin.getUser().getUsername();
-            if (sex) {
-                mTv_state.setText(username + "\n" + "男");
-            } else {
-                mTv_state.setText(username + "\n" + "女");
-            }
-        }
 
         mNav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -143,21 +159,14 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                         mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
                         mToolbar.setTitle("智慧南大");
                         replaceFragment(new BeginPageFragment());
-
-//                        mSi_beginBackground.setVisibility(View.VISIBLE);
-//                        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
-//                        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-//                        mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                         break;
                     //点击设置
                     case R.id.nav_setting:
-
                         break;
                 }
                 return true;
             }
         });
-
     }
 
     private void initEvent() {
@@ -194,9 +203,15 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 break;
             //学校概况
             case R.id.schoolpresentation:
+                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                mToolbar.setTitle("学校概况");
+                replaceFragment(new SchoolMessageFragment());
                 break;
             //校园风光
             case R.id.schoolview:
+
                 break;
         }
         return true;
@@ -255,38 +270,21 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //清除本地缓存图片
                 if (new IsLogin().isLogin()) {
-                    BmobUser.logOut();   //清除缓存用户对象
-                    mTv_state.setText("点击登录");
+                    User user = BmobUser.getCurrentUser(User.class);
+                    String cacheDirPath = "/data/data/" + getApplicationContext().getPackageName() + "/cache/" + user.getUsername() + "icon.jpg";
+                    new File(cacheDirPath).delete();
+                    //清除缓存用户对象
+                    BmobUser.logOut();
+                    initPersonalInfo();
                 } else {
                     ToastUntil.showShortToast(BeginPageActivity.this, "请先登录！");
                 }
             }
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
+        builder.setNegativeButton("取消", null);
         builder.show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        User currentUser = BmobUser.getCurrentUser(User.class);
-        if (currentUser != null) {
-            Boolean sex = currentUser.getSex();
-            String username = currentUser.getUsername();
-            if (sex) {
-                mTv_state.setText(username + "  " + "男");
-            } else {
-                mTv_state.setText(username + "  " + "女");
-            }
-        } else {
-            mTv_state.setText("点击登录");
-        }
     }
 
     //替换fragment
@@ -302,8 +300,63 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         startActivity(intent);
     }
 
-    private void initData() {
+    //加载用户配置的方法
+    private void initPersonalInfo() {
+        User user = BmobUser.getCurrentUser(User.class);
+        if (user != null) {
+            Boolean sex = user.getSex();
+            String username = user.getUsername();
+            if (sex) {
+                mTv_state.setText(username + "  " + "男");
+            } else {
+                mTv_state.setText(username + "  " + "女");
+            }
+            BmobFile bmobFile = user.getImage();
+            if (bmobFile != null) {
+                String cacheDirPath = "/data/data/" + getApplicationContext().getPackageName() + "/cache/" + bmobFile.getFilename();
+                File file = new File(cacheDirPath);
+                if (!file.exists()) {
+                    bmobFile.download(file, new DownloadFileListener() {
+                        @Override
+                        public void done(String s, BmobException e) {
+                            if (e == null) {
+                                Log.d("", "加载成功！" + s);
+                                Bitmap bitmap = getDiskBitmap(s);
+                                mIcon_image.setImageBitmap(bitmap);
+                            }
+                        }
 
+                        @Override
+                        public void onProgress(Integer integer, long l) {
+
+                        }
+                    });
+                } else {
+                    Bitmap bitmap = getDiskBitmap(cacheDirPath);
+                    mIcon_image.setImageBitmap(bitmap);
+                }
+            } else {
+                mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_user_head_img));
+            }
+        } else {
+            mTv_state.setText("点击登录");
+            mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_avatar_man));
+//            mIcon_image.setImageResource(R.mipmap.default_avatar_man);
+        }
     }
 
+    //获取BitMap图片
+    private Bitmap getDiskBitmap(String pathString) {
+        Bitmap bitmap = null;
+        try {
+            File file = new File(pathString);
+            if (file.exists()) {
+                bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                //bitmap = BitmapFactory.decodeFile(pathString);
+            }
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return bitmap;
+    }
 }
