@@ -81,8 +81,12 @@ public class SchoolCarFragment extends Fragment {
     }
 
     private void initData() {
-        myAdapter = new MyAdapter();
-        mlv_schoolbus.setAdapter(myAdapter);
+        if (myAdapter != null) {
+            mlv_schoolbus.setAdapter(myAdapter);
+        } else {
+            myAdapter = new MyAdapter();
+            mlv_schoolbus.setAdapter(myAdapter);
+        }
 //        //条目点击事件
 //        mlv_schoolbus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -95,8 +99,10 @@ public class SchoolCarFragment extends Fragment {
 
     private void refreshSchoolBus() {
         gotoFindJson();
-        myAdapter.notifyDataSetChanged();
-        swip_refresh.setRefreshing(false);
+        if (myAdapter != null) {
+            myAdapter.notifyDataSetChanged();
+            swip_refresh.setRefreshing(false);
+        }
     }
 
     //加载Json方法
@@ -152,7 +158,7 @@ public class SchoolCarFragment extends Fragment {
 
     private void parseJSONWithGSON(String s) {
         Gson gson = new Gson();
-        schoolBusList = gson.fromJson(path, new TypeToken<List<SchoolBus>>() {
+        schoolBusList = gson.fromJson(s, new TypeToken<List<SchoolBus>>() {
         }.getType());
     }
 
