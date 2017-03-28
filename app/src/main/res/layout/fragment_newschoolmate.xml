@@ -1,110 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
-
         <LinearLayout
-            android:id="@+id/ll_calendar"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/siv_calendar"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:src="@mipmap/calendar" />
+            <LinearLayout
+                android:id="@+id/ll_calendar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:layout_marginTop="4dp"
+                    android:id="@+id/siv_calendar"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/calendar" />
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="日历"
-                 />
-        </LinearLayout>
+                android:layout_marginTop="3dp"
+                android:text="日历" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_school_car"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@color/white"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_school_car"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/siv_school_car"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:src="@mipmap/school_car" />
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/siv_school_car"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@mipmap/school_car" />
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="校车"
-               />
-        </LinearLayout>
+                android:layout_marginTop="3dp"
+                android:text="校车" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_weather"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@color/white"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_weather"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/siv_weather"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:src="@mipmap/weather" />
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/siv_weather"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@mipmap/weather" />
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="天气"
-               />
-        </LinearLayout>
+                android:layout_marginTop="3dp"
+                android:text="天气" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_icn_4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:background="@color/white"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/ll_icn_4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/siv_icn_4"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:src="@mipmap/icn_4" />
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/siv_icn_4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@mipmap/icn_4" />
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="待续"
-                 />
+                android:layout_marginTop="3dp"
+                android:text="待续" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
     <FrameLayout
         android:id="@+id/fl_newSchoolmate"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </LinearLayout>

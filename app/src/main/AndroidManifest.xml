@@ -52,12 +52,15 @@
             android:name="com.intelligencencu.activity.MapActivity"
             android:label="校园地图" />
         <activity android:name="com.intelligencencu.activity.ResetPasswordActivity" />
+        <activity android:name="com.intelligencencu.activity.ShowViewActivity" />
 
         <!--地图-->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote">
+
+        </service>
     </application>
 
 </manifest>

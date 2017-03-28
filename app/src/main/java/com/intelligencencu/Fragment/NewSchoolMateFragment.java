@@ -47,6 +47,10 @@ public class NewSchoolMateFragment extends Fragment {
         msiv_weather = (SpringingImageView) view.findViewById(R.id.siv_weather);
 //        mll_icn_4 = (LinearLayout) view.findViewById(R.id.ll_icn_4);
         msiv_icn_4 = (SpringingImageView) view.findViewById(R.id.siv_icn_4);
+        msiv_calendar.setIsCircleImage(true);
+        msiv_school_car.setIsCircleImage(true);
+        msiv_weather.setIsCircleImage(true);
+        msiv_icn_4.setIsCircleImage(true);
 
         initSpringLayout();
         //默认显示日历
@@ -92,6 +96,7 @@ public class NewSchoolMateFragment extends Fragment {
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
                 replaceFragment(new WeatherFragment());
+
 
             }
         });

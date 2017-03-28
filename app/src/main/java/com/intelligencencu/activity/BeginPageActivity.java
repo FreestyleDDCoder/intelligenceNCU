@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.intelligencencu.Fragment.BeginPageFragment;
@@ -33,21 +34,15 @@ import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.ToastUntil;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
-import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
-import cn.bmob.v3.listener.QueryListener;
-import de.hdodenhof.circleimageview.CircleImageView;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchPointHandler;
 import dym.unique.com.springinglayoutlibrary.view.SpringingImageView;
@@ -358,5 +353,29 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             // TODO: handle exception
         }
         return bitmap;
+    }
+
+
+    //以下为触摸监听接口，方便在Fragment中实现触摸事件
+    private ArrayList<MyOnTouchListener> onTouchListeners = new ArrayList<MyOnTouchListener>();
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        for (MyOnTouchListener listener : onTouchListeners) {
+            listener.onTouch(ev);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public void registerMyOnTouchListener(MyOnTouchListener myOnTouchListener) {
+        onTouchListeners.add(myOnTouchListener);
+    }
+
+    public void unregisterMyOnTouchListener(MyOnTouchListener myOnTouchListener) {
+        onTouchListeners.remove(myOnTouchListener);
+    }
+
+    public interface MyOnTouchListener {
+        public boolean onTouch(MotionEvent ev);
     }
 }

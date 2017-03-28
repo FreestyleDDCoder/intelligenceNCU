@@ -9,10 +9,8 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
+
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
@@ -23,14 +21,12 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
-import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaHideHandler;
+
 import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaShowHandler;
-import dym.unique.com.springinglayoutlibrary.handler.SpringingNotificationJumpHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingNotificationRotateHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchDragHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchPointHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchScaleHandler;
-import dym.unique.com.springinglayoutlibrary.handler.SpringingTranslationHideHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTranslationShowHandler;
 import dym.unique.com.springinglayoutlibrary.view.SpringingEditText;
 import dym.unique.com.springinglayoutlibrary.view.SpringingImageView;

@@ -1,6 +1,7 @@
 package com.intelligencencu.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 
 import com.bumptech.glide.Glide;
+import com.intelligencencu.activity.ShowViewActivity;
 import com.intelligencencu.entity.SchoolOverView;
 import com.intelligencencu.intelligencencu.R;
 
@@ -66,7 +68,7 @@ public class SchoolViewAdapter extends RecyclerView.Adapter<SchoolViewAdapter.Vi
     //条目逻辑处理
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        SchoolOverView view = mschooloverviews.get(position);
+        final SchoolOverView view = mschooloverviews.get(position);
         holder.title.setText(view.getTitle());
         //Glide.with.load方法可以直接加载本地路径，可以是URI，也可以是资源id
         Glide.with(mcontext).load(view.getBackgroundUrl()).into(holder.imageView);
@@ -75,13 +77,19 @@ public class SchoolViewAdapter extends RecyclerView.Adapter<SchoolViewAdapter.Vi
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showViewMessage();
+                showViewMessage(view.getTitle(), view.getBackgroundUrl(), view.getContentUrl(), view.getImgTitleUrl());
             }
         });
     }
 
-    private void showViewMessage() {
+    private void showViewMessage(String title, String backgroundUrl, String contentUrl, String imgTitleUrl) {
         //处理条目点击事件
+        Intent intent = new Intent(mcontext, ShowViewActivity.class);
+        intent.putExtra("title", title);
+        intent.putExtra("backgroundUrl", backgroundUrl);
+        intent.putExtra("contentUrl", contentUrl);
+        intent.putExtra("imgTitleUrl", imgTitleUrl);
+        mcontext.startActivity(intent);
     }
 
     private void showViews(ViewHolder holder) {
