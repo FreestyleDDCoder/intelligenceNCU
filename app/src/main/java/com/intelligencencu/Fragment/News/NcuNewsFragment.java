@@ -1,9 +1,8 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.News;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,9 +15,9 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.intelligencencu.adapter.SchoolViewAdapter;
+import com.intelligencencu.adapter.NcuNewsAdapter;
 import com.intelligencencu.db.File;
-import com.intelligencencu.entity.SchoolOverView;
+import com.intelligencencu.entity.NcuNews;
 import com.intelligencencu.intelligencencu.R;
 
 import java.util.List;
@@ -32,28 +31,25 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by liangzhan on 17-3-26.
- * 学校概况
+ * Created by liangzhan on 17-3-30.
+ * 昌大要闻
  */
 
-public class SchoolMessageFragment extends Fragment {
+public class NcuNewsFragment extends Fragment {
 
-    // private ProgressBar pb_message;
-    private RecyclerView rv_schoolview;
-    private List<SchoolOverView> schoolOverViewList = null;
-    private SchoolViewAdapter adapter;
+    private SwipeRefreshLayout swip_ncunews;
     private String path = null;
-    private GridLayoutManager layoutManager;
-    private SwipeRefreshLayout swip_schoolviewrefresh;
+    private RecyclerView rlv_ncunews;
+    private NcuNewsAdapter adapter;
+    private List<NcuNews> ncuNewsList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schoolmessage, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_ncunews, container, false);
         initView(view);
+        initEvent();
         gotofindJson();
-        //showWebView();
         return view;
     }
 
@@ -69,38 +65,48 @@ public class SchoolMessageFragment extends Fragment {
                 } else {
                     initAdapter();
                 }
-                swip_schoolviewrefresh.setRefreshing(false);
+                swip_ncunews.setRefreshing(false);
             }
         }
     };
 
-    private void initAdapter() {
-        rv_schoolview.setLayoutManager(layoutManager);
-        if (schoolOverViewList != null) {
-            adapter = new SchoolViewAdapter(schoolOverViewList);
-            rv_schoolview.setAdapter(adapter);
+    private void parseJSONWithGSON(String path) {
+        Gson gson = new Gson();
+        ncuNewsList = gson.fromJson(path, new TypeToken<List<NcuNews>>() {
+        }.getType());
+        for (NcuNews ncuNews : ncuNewsList) {
+            Log.d("schoolOverView", ncuNews.getContent() + ncuNews.getTitle());
         }
     }
 
-    private void initView(View view) {
-        //final long startTime = System.currentTimeMillis();
-        rv_schoolview = (RecyclerView) view.findViewById(R.id.rv_schoolview);
-        swip_schoolviewrefresh = (SwipeRefreshLayout) view.findViewById(R.id.swip_schoolviewrefresh);
-        swip_schoolviewrefresh.setColorSchemeResources(R.color.colorPrimary);
-        swip_schoolviewrefresh.setRefreshing(true);
-        swip_schoolviewrefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    private void initAdapter() {
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        rlv_ncunews.setLayoutManager(layoutManager);
+        if (ncuNewsList != null) {
+            adapter = new NcuNewsAdapter(ncuNewsList);
+            rlv_ncunews.setAdapter(adapter);
+        }
+    }
+
+    private void initEvent() {
+        swip_ncunews.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 gotofindJson();
             }
         });
-        layoutManager = new GridLayoutManager(getActivity(), 2);
-        // pb_message = (ProgressBar) view.findViewById(R.id.pb_message);
+    }
+
+    private void initView(View view) {
+        swip_ncunews = (SwipeRefreshLayout) view.findViewById(R.id.swip_ncunews);
+        swip_ncunews.setColorSchemeResources(R.color.colorPrimary);
+        swip_ncunews.setRefreshing(true);
+        rlv_ncunews = (RecyclerView) view.findViewById(R.id.rlv_ncunews);
     }
 
     private void gotofindJson() {
-        BmobQuery<File> query = new BmobQuery<File>();
-        query.getObject("DFhk999M", new QueryListener<File>() {
+        BmobQuery<File> query = new BmobQuery<>();
+        query.getObject("Nhd0FFFI", new QueryListener<File>() {
             @Override
             public void done(File file, BmobException e) {
                 if (e == null) {
@@ -131,15 +137,5 @@ public class SchoolMessageFragment extends Fragment {
                 }
             }
         });
-    }
-
-    //json解析
-    private void parseJSONWithGSON(String s) {
-        Gson gson = new Gson();
-        schoolOverViewList = gson.fromJson(s, new TypeToken<List<SchoolOverView>>() {
-        }.getType());
-        for (SchoolOverView schoolOverView : schoolOverViewList) {
-            Log.d("schoolOverView", schoolOverView.getId() + schoolOverView.getTitle());
-        }
     }
 }

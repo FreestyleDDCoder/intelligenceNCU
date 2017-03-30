@@ -53,6 +53,7 @@
             android:label="校园地图" />
         <activity android:name="com.intelligencencu.activity.ResetPasswordActivity" />
         <activity android:name="com.intelligencencu.activity.ShowViewActivity" />
+        <activity android:name="com.intelligencencu.activity.ShowNewsActivity"/>
 
         <!--地图-->
         <service

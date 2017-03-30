@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.Schoollife;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.intelligencencu.activity.BeginPageActivity;
@@ -44,6 +43,7 @@ public class SchoolYellowFragment extends Fragment {
         initView(view);
         initEvent();
         initGesture();
+
         gotoSchoolPhone();
 
         return view;
@@ -80,10 +80,10 @@ public class SchoolYellowFragment extends Fragment {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 try {
-                    if (e1.getX() - e2.getX() < -89) {
+                    if (e1.getX() - e2.getX() < -89 && Math.abs(e1.getY() - e2.getY()) < 120) {
                         flingLeft();
                         return true;
-                    } else if (e1.getX() - e2.getX() > 89) {
+                    } else if (e1.getX() - e2.getX() > 89 && Math.abs(e1.getY() - e2.getY()) < 120) {
                         flingRight();
                         return true;
                     }

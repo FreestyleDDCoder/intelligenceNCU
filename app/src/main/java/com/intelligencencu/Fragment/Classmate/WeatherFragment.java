@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.Classmate;
 
 import android.os.Build;
 import android.os.Bundle;

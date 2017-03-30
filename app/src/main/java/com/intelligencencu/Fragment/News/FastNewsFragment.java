@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.News;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import com.intelligencencu.intelligencencu.R;
 
 /**
- * Created by liangzhan on 17-3-28.
- * 学校黄页（电话信息）界面
+ * Created by liangzhan on 17-3-30.
+ * 学校快讯Fragment
  */
 
-public class SchoolPhoneFragment extends Fragment {
+public class FastNewsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schoolphone, container, false);
+        View view = inflater.inflate(R.layout.fragment_fastnews, container, false);
         return view;
     }
 }

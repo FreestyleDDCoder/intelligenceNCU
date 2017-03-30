@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.Schoollife;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import com.intelligencencu.intelligencencu.R;
 
 /**
- * Created by liangzhan on 17-3-24.
- * 更多fragment
+ * Created by liangzhan on 17-3-28.
+ * 查询服务Fragment
  */
 
-public class MoreFragment extends Fragment {
+public class QueryServiceFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_more, container, false);
+        View view = inflater.inflate(R.layout.fragment_queryservice, container, false);
         return view;
     }
 }

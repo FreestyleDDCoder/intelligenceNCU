@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.Classmate;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,7 +55,7 @@ import static cn.bmob.v3.Bmob.getApplicationContext;
 
 public class SchoolCarFragment extends Fragment {
 
-    private String path;
+    private String path = null;
     private List<SchoolBus> schoolBusList;
     private ListView mlv_schoolbus;
     private SwipeRefreshLayout swip_refresh;
@@ -65,44 +65,35 @@ public class SchoolCarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schoolcar, container, false);
-        mlv_schoolbus = (ListView) view.findViewById(R.id.lv_schoolbus);
-        swip_refresh = (SwipeRefreshLayout) view.findViewById(R.id.swip_refresh);
+        initView(view);
         //加载网路数据
         gotoFindJson();
         //下拉刷新控件
+
+        return view;
+    }
+
+    private void initView(View view) {
+        mlv_schoolbus = (ListView) view.findViewById(R.id.lv_schoolbus);
+        swip_refresh = (SwipeRefreshLayout) view.findViewById(R.id.swip_refresh);
         swip_refresh.setColorSchemeResources(R.color.colorPrimary);
+        swip_refresh.setRefreshing(true);
         swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshSchoolBus();
+                gotoFindJson();
             }
         });
-        return view;
     }
 
     private void initData() {
         if (myAdapter != null) {
-            mlv_schoolbus.setAdapter(myAdapter);
+            myAdapter.notifyDataSetChanged();
         } else {
             myAdapter = new MyAdapter();
             mlv_schoolbus.setAdapter(myAdapter);
         }
-//        //条目点击事件
-//        mlv_schoolbus.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                SchoolBus bus = schoolBusList.get(position);
-//                Log.d("bus", bus.getName() + bus.getTime() + bus.getPathway() + bus.getName());
-//            }
-//        });
-    }
-
-    private void refreshSchoolBus() {
-        gotoFindJson();
-        if (myAdapter != null) {
-            myAdapter.notifyDataSetChanged();
-            swip_refresh.setRefreshing(false);
-        }
+        swip_refresh.setRefreshing(false);
     }
 
     //加载Json方法
@@ -139,6 +130,25 @@ public class SchoolCarFragment extends Fragment {
                 }
             }
         });
+        //http://bmob-cdn-5986.b0.upaiyun.com/2017/03/26/4ef56a164067bccf801e94386b58c505.json
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                super.run();
+//                try {
+//                    String url = "http://bmob-cdn-5986.b0.upaiyun.com/2017/03/26/4ef56a164067bccf801e94386b58c505.json";
+//                    OkHttpClient client = new OkHttpClient();
+//                    Request request = new Request.Builder().url(url).build();
+//                    Response response = client.newCall(request).execute();
+//                    path = response.body().string();
+//                    Message message = new Message();
+//                    message.what = 0;
+//                    handler.sendMessage(message);
+//                } catch (Exception e1) {
+//                    e1.printStackTrace();
+//                }
+//            }
+//        }.start();
     }
 
     public Handler handler = new Handler() {
@@ -160,6 +170,9 @@ public class SchoolCarFragment extends Fragment {
         Gson gson = new Gson();
         schoolBusList = gson.fromJson(s, new TypeToken<List<SchoolBus>>() {
         }.getType());
+        for (SchoolBus schoolBus : schoolBusList) {
+            Log.d("SchoolBus", schoolBus.getName() + schoolBus.getPathway() + schoolBus.getTime());
+        }
     }
 
     //适配器

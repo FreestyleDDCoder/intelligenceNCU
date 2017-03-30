@@ -1,6 +1,5 @@
 package com.intelligencencu.Fragment;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,9 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
+import com.intelligencencu.Fragment.Classmate.CalenderFragment;
+import com.intelligencencu.Fragment.Classmate.MoreFragment;
+import com.intelligencencu.Fragment.Classmate.SchoolCarFragment;
+import com.intelligencencu.Fragment.Classmate.WeatherFragment;
 import com.intelligencencu.intelligencencu.R;
 
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchPointHandler;

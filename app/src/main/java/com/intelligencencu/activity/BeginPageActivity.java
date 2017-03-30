@@ -1,12 +1,10 @@
 package com.intelligencencu.activity;
 
-import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -28,8 +26,8 @@ import android.view.View;
 import com.intelligencencu.Fragment.BeginPageFragment;
 import com.intelligencencu.Fragment.NewSchoolMateFragment;
 import com.intelligencencu.Fragment.SchoolMessageFragment;
-import com.intelligencencu.Fragment.SchoolNewsFragment;
-import com.intelligencencu.Fragment.SchoolYellowFragment;
+import com.intelligencencu.Fragment.News.SchoolNewsFragment;
+import com.intelligencencu.Fragment.Schoollife.SchoolYellowFragment;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.IsLogin;
@@ -235,7 +233,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.newclassmate:
                 replaceFragment(new NewSchoolMateFragment());
-                mToolbar.setTitle("新生导航");
+                mToolbar.setTitle("学生导航");
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));

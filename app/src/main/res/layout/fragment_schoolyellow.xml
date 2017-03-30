@@ -58,7 +58,7 @@
         <LinearLayout
             android:id="@+id/lay1"
             android:layout_width="0dp"
-            android:layout_height="4dp"
+            android:layout_height="3dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -67,7 +67,7 @@
         <LinearLayout
             android:id="@+id/lay2"
             android:layout_width="0dp"
-            android:layout_height="4dp"
+            android:layout_height="3dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -76,7 +76,7 @@
         <LinearLayout
             android:id="@+id/lay3"
             android:layout_width="0dp"
-            android:layout_height="4dp"
+            android:layout_height="3dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -85,7 +85,7 @@
         <LinearLayout
             android:id="@+id/lay4"
             android:layout_width="0dp"
-            android:layout_height="4dp"
+            android:layout_height="3dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -95,5 +95,6 @@
     <FrameLayout
         android:id="@+id/schoollife"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent">
+    </FrameLayout>
 </LinearLayout>

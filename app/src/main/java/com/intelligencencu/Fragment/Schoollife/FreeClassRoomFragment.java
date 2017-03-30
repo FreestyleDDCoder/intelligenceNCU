@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.Schoollife;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,14 +11,14 @@ import com.intelligencencu.intelligencencu.R;
 
 /**
  * Created by liangzhan on 17-3-28.
- * 失物招领Fragment
+ * 空闲教室Fragment
  */
 
-public class LostFoundFragment extends Fragment {
+public class FreeClassRoomFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lostfound, container, false);
+        View view = inflater.inflate(R.layout.fragment_freeclassroom, container, false);
         return view;
     }
 }

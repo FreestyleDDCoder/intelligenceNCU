@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.News;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import com.intelligencencu.intelligencencu.R;
 
 /**
- * Created by liangzhan on 17-3-28.
- * 空闲教室Fragment
+ * Created by liangzhan on 17-3-30.
+ * 美丽昌大
  */
 
-public class FreeClassRoomFragment extends Fragment {
+public class ButiNcuFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_freeclassroom, container, false);
+        View view = inflater.inflate(R.layout.fragment_butincu, container, false);
         return view;
     }
 }
