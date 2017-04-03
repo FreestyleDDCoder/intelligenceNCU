@@ -19,6 +19,7 @@ import com.intelligencencu.adapter.NcuNewsAdapter;
 import com.intelligencencu.db.File;
 import com.intelligencencu.entity.NcuNews;
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.ToastUntil;
 
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class NcuNewsFragment extends Fragment {
     private SwipeRefreshLayout swip_ncunews;
     private String path = null;
     private RecyclerView rlv_ncunews;
-    private NcuNewsAdapter adapter;
-    private List<NcuNews> ncuNewsList;
+    private NcuNewsAdapter adapter = null;
+    private List<NcuNews> ncuNewsList = null;
 
     @Nullable
     @Override
@@ -85,6 +86,8 @@ public class NcuNewsFragment extends Fragment {
         if (ncuNewsList != null) {
             adapter = new NcuNewsAdapter(ncuNewsList);
             rlv_ncunews.setAdapter(adapter);
+        } else {
+            ToastUntil.showShortToast(getActivity(), "数据异常");
         }
     }
 

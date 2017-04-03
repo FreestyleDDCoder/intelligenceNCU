@@ -8,20 +8,20 @@
     app:cardCornerRadius="4dp">
 
     <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
-        android:id="@+id/sll_ncunews"
+        android:id="@+id/sll_peoplestory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-            android:id="@+id/siv_ncunews"
+            android:id="@+id/siv_peoplestory"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:visibility="invisible" />
 
         <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
-            android:id="@+id/stv_ncunews"
+            android:id="@+id/stv_peoplestory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

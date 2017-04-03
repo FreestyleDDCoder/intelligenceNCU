@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/baidumap"
+        android:id="@+id/mylocation"
         android:icon="@mipmap/schoolmap"
         android:title="校园地图"
         app:showAsAction="always"
         />
     <item
-        android:id="@+id/schoolpresentation"
-        android:title="学校概况"
+        android:id="@+id/normalmap"
+        android:title="普通地图"
         app:showAsAction="never"/>
     <item
-        android:id="@+id/schoolview"
-        android:title="校园风光"
+        android:id="@+id/satellitemap"
+        android:title="卫星地图"
         app:showAsAction="never"/>
 </menu>

@@ -219,8 +219,13 @@ public class SchoolCarFragment extends Fragment {
                     Log.d("bus", bus.getName() + bus.getTime() + bus.getPathway() + bus.getName());
                 }
             });
+            showView(holder);
             return view;
         }
+    }
+
+    private void showView(ViewHolder holder) {
+        holder.Name.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(getActivity(), holder.Name));
     }
 
     static class ViewHolder {

@@ -1,6 +1,7 @@
 package com.intelligencencu.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -41,27 +43,24 @@ import dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout;
 public class MapActivity extends AppCompatActivity {
 
     private LocationClient mLocationClient;
-    private SpringingLinearLayout mSl_baiduMap;
     private SpringingTextView mTv_position;
     private MapView mMv_baiduview;
     private BaiduMap baiduMap;
     private boolean isFirstLocate = true;
+    private double latitude;
+    private double longitude;
+    private BDLocation location;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initUI();
-        initSpringLayout();
         //点击事件
         initEvent();
     }
 
     private void initEvent() {
 
-    }
-
-    private void initSpringLayout() {
-        mTv_position.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mTv_position));
     }
 
     private void initUI() {
@@ -73,7 +72,7 @@ public class MapActivity extends AppCompatActivity {
         baiduMap = mMv_baiduview.getMap();
         //设置地图上显示的位置随着位置的变动而变动
         baiduMap.setMyLocationEnabled(true);
-        mSl_baiduMap = (SpringingLinearLayout) findViewById(R.id.sl_baiduMap);
+
         mTv_position = (SpringingTextView) findViewById(R.id.tv_position);
 
         Toolbar mBaidumapToolbar = (Toolbar) findViewById(R.id.baidumapToolbar);
@@ -90,7 +89,6 @@ public class MapActivity extends AppCompatActivity {
 
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
-
 
 //        运行时权限
         ArrayList<String> permissionList = new ArrayList<>();
@@ -132,7 +130,22 @@ public class MapActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-
+            case R.id.normalmap:
+                baiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+                break;
+            case R.id.satellitemap:
+                baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
+                break;
+            case R.id.mylocation:
+                if (location != null) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(latLng);
+                    baiduMap.animateMapStatus(update);
+                    //设置地图的缩放级别（3-19）数字越大信息越精细
+                    update = MapStatusUpdateFactory.zoomTo(16f);
+                    baiduMap.animateMapStatus(update);
+                }
+                break;
         }
         return true;
     }
@@ -166,22 +179,16 @@ public class MapActivity extends AppCompatActivity {
 
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-
+            location = bdLocation;
             if (bdLocation.getLocType() == BDLocation.TypeGpsLocation || bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
                 //找到自己的位置
                 navigateUpTo(bdLocation);
             }
-
             StringBuffer currentposition = new StringBuffer();
+            latitude = bdLocation.getLatitude();
+            longitude = bdLocation.getLongitude();
             currentposition.append("纬度：").append(bdLocation.getLatitude()).append("\n");
             currentposition.append("经度：").append(bdLocation.getLongitude()).append("\n");
-            currentposition.append("定位方式：");
-            if (bdLocation.getLocType() == BDLocation.TypeGpsLocation) {
-                currentposition.append("GPS");
-            } else if (bdLocation.getLocType() == BDLocation.TypeNetWorkLocation) {
-                currentposition.append("网络");
-            }
-            mTv_position.setText(currentposition);
         }
 
         @Override
@@ -202,6 +209,8 @@ public class MapActivity extends AppCompatActivity {
             update = MapStatusUpdateFactory.zoomTo(16f);
             baiduMap.animateMapStatus(update);
             isFirstLocate = false;
+        } else {
+
         }
         //设置地图上显示的位置随着位置的变动而变动（有小光标）
         MyLocationData.Builder locationBuilder = new MyLocationData.Builder();
@@ -220,7 +229,7 @@ public class MapActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mMv_baiduview.onResume();
+        mMv_baiduview.onPause();
     }
 
     @Override
@@ -229,5 +238,11 @@ public class MapActivity extends AppCompatActivity {
         mLocationClient.stop();
         mMv_baiduview.onDestroy();
         baiduMap.setMyLocationEnabled(false);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.maptoolbar, menu);
+        return true;
     }
 }

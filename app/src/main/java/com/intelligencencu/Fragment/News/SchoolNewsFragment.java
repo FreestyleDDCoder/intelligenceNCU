@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.intelligencencu.Fragment.News.NcuNewsFragment;
+import com.intelligencencu.activity.BeginPageActivity;
 import com.intelligencencu.intelligencencu.R;
 
 /**
@@ -36,6 +37,7 @@ public class SchoolNewsFragment extends Fragment {
     private LinearLayout news4;
 
     private int position = 1;
+    private BeginPageActivity.MyOnTouchListener myOnTouchListener;
 
     @Nullable
     @Override
@@ -50,7 +52,7 @@ public class SchoolNewsFragment extends Fragment {
 
     //滑动手势
     private void initTouch() {
-        new GestureDetector(getActivity(), new GestureDetector.OnGestureListener() {
+        final GestureDetector detector = new GestureDetector(getActivity(), new GestureDetector.OnGestureListener() {
             @Override
             public boolean onDown(MotionEvent e) {
                 return false;
@@ -68,17 +70,6 @@ public class SchoolNewsFragment extends Fragment {
 
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                try {
-                    if (e1.getX() - e2.getX() < -89 && Math.abs(e1.getY() - e2.getY()) < 120) {
-                        flingLeft();
-                        return true;
-                    } else if (e1.getX() - e2.getX() > 89 && Math.abs(e1.getY() - e2.getY()) < 120) {
-                        flingRight();
-                        return true;
-                    }
-                } catch (Exception e) {
-                    Log.d(getActivity().toString(), "" + e);
-                }
                 return false;
             }
 
@@ -89,9 +80,30 @@ public class SchoolNewsFragment extends Fragment {
 
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+                try {
+                    if (e1.getX() - e2.getX() < -120 && Math.abs(e1.getY() - e2.getY()) < 120) {
+                        flingLeft();
+                        return true;
+                    } else if (e1.getX() - e2.getX() > 120 && Math.abs(e1.getY() - e2.getY()) < 120) {
+                        flingRight();
+                        return true;
+                    }
+                } catch (Exception e) {
+                    Log.d(getActivity().toString(), "" + e);
+                }
                 return false;
             }
         });
+
+        myOnTouchListener = new BeginPageActivity.MyOnTouchListener() {
+            @Override
+            public boolean onTouch(MotionEvent ev) {
+                boolean result = detector.onTouchEvent(ev);
+                return result;
+            }
+        };
+
+        ((BeginPageActivity) getActivity()).registerMyOnTouchListener(myOnTouchListener);
     }
 
     //往右滑手势
@@ -229,5 +241,13 @@ public class SchoolNewsFragment extends Fragment {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.fl_schoolNews, fragment);
         transaction.commit();
+    }
+
+    //注意当有多个Fragment使用GestureDetector的时候，在每个使用界面销毁时一定得反注册掉
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //当这个fragmentation销毁时注销掉
+        ((BeginPageActivity) getActivity()).unregisterMyOnTouchListener(myOnTouchListener);
     }
 }

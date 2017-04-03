@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.Classmate;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -55,7 +55,8 @@ public class NewSchoolMateFragment extends Fragment {
 
         initSpringLayout();
         //默认显示日历
-        msiv_calendar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        msiv_calendar.setBackgroundResource(R.drawable.circle_background);
+        //msiv_calendar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         msiv_school_car.setBackgroundColor(getResources().getColor(R.color.white));
         msiv_weather.setBackgroundColor(getResources().getColor(R.color.white));
         msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
@@ -71,7 +72,8 @@ public class NewSchoolMateFragment extends Fragment {
         msiv_calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                msiv_calendar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                msiv_calendar.setBackgroundResource(R.drawable.circle_background);
+               // msiv_calendar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 msiv_school_car.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
@@ -83,7 +85,8 @@ public class NewSchoolMateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 msiv_calendar.setBackgroundColor(getResources().getColor(R.color.white));
-                msiv_school_car.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                msiv_school_car.setBackgroundResource(R.drawable.circle_background);
+                //msiv_school_car.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
                 replaceFragment(new SchoolCarFragment());
@@ -94,7 +97,8 @@ public class NewSchoolMateFragment extends Fragment {
             public void onClick(View v) {
                 msiv_calendar.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_school_car.setBackgroundColor(getResources().getColor(R.color.white));
-                msiv_weather.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                msiv_weather.setBackgroundResource(R.drawable.circle_background);
+                //msiv_weather.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.white));
                 replaceFragment(new WeatherFragment());
 
@@ -107,7 +111,8 @@ public class NewSchoolMateFragment extends Fragment {
                 msiv_calendar.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_school_car.setBackgroundColor(getResources().getColor(R.color.white));
                 msiv_weather.setBackgroundColor(getResources().getColor(R.color.white));
-                msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                msiv_icn_4.setBackgroundResource(R.drawable.circle_background);
+                //msiv_icn_4.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 replaceFragment(new MoreFragment());
             }
         });

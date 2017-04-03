@@ -1,11 +1,11 @@
 package com.intelligencencu.entity;
 
 /**
- * Created by liangzhan on 17-3-30.
- * 昌大要闻实体
+ * Created by liangzhan on 17-3-31.
+ * 人物故事实体
  */
 
-public class NcuNews {
+public class PeopleStory {
     private String title;
     private String content;
     private String img;
@@ -42,5 +42,4 @@ public class NcuNews {
     public void setTime(String time) {
         this.time = time;
     }
-
 }

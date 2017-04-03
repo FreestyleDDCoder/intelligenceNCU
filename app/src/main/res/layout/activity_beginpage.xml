@@ -31,31 +31,68 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/newclassmate"
+            android:gravity="center"
+            android:background="#FFF"
+            android:layout_height="50dp">
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFF"
-                android:src="@mipmap/newclassmate" />
+                android:gravity="center">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/schoolyellow"
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/siv_begin"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="#FFF"
+                    android:src="@mipmap/beginpage" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFF"
-                android:src="@mipmap/schoolyellow" />
+                android:gravity="center_horizontal">
 
-            <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
-                android:id="@+id/schoolnews"
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/newclassmate"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="#FFF"
+                    android:src="@mipmap/newclassmate" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="#FFF"
-                android:src="@mipmap/schoolnews" />
+                android:gravity="center_horizontal">
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/schoolyellow"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="#FFF"
+                    android:src="@mipmap/schoolyellow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#FFF"
+                android:gravity="center_horizontal">
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
+                    android:id="@+id/schoolnews"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="#FFF"
+                    android:src="@mipmap/schoolnews" />
+            </LinearLayout>
         </LinearLayout>
     </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
 

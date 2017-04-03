@@ -24,7 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.intelligencencu.Fragment.BeginPageFragment;
-import com.intelligencencu.Fragment.NewSchoolMateFragment;
+import com.intelligencencu.Fragment.Classmate.NewSchoolMateFragment;
 import com.intelligencencu.Fragment.SchoolMessageFragment;
 import com.intelligencencu.Fragment.News.SchoolNewsFragment;
 import com.intelligencencu.Fragment.Schoollife.SchoolYellowFragment;
@@ -53,6 +53,7 @@ import dym.unique.com.springinglayoutlibrary.view.SpringingTextView;
 
 public class BeginPageActivity extends AppCompatActivity implements View.OnClickListener {
 
+
     private DrawerLayout mdrawer_layout;
     private NavigationView mNav_view;
     private SpringingImageView mIcon_image;
@@ -63,6 +64,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mSchoolyellow;
     private SpringingImageView mSchoolnews;
     private Toolbar mToolbar;
+    private SpringingImageView siv_begin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,13 +87,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         Log.d("onRestart", "onRestart");
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        initPersonalInfo();
-//        Log.d("onStart", "onStart");
-//    }
-
     //用于展现效果
     private void initSpringLayout() {
         mTv_state.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mTv_state));
@@ -101,6 +96,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mIcon_image.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mIcon_image).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mNewclassmate.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mNewclassmate).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mSchoolyellow.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolyellow).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
+        siv_begin.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, siv_begin).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mSchoolnews.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolnews).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
     }
 
@@ -125,13 +121,12 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
         mTv_state = (SpringingTextView) headerView.findViewById(R.id.tv_state);
 
+        siv_begin = (SpringingImageView) findViewById(R.id.siv_begin);
         mNewclassmate = (SpringingImageView) findViewById(R.id.newclassmate);
         mSchoolyellow = (SpringingImageView) findViewById(R.id.schoolyellow);
         mSchoolnews = (SpringingImageView) findViewById(R.id.schoolnews);
 
-        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-        mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+        siv_begin.setBackgroundResource(R.drawable.circle_background);
         replaceFragment(new BeginPageFragment());
 
         mNav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -147,6 +142,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                     //点击主页时的变化
                     case R.id.nav_main:
                         mdrawer_layout.closeDrawers();
+                        siv_begin.setBackgroundResource(R.drawable.circle_background);
                         mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                         mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                         mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
@@ -163,7 +159,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initEvent() {
-//        mTv_state.setOnClickListener(this);
+        siv_begin.setOnClickListener(this);
         mIcon_image.setOnClickListener(this);
         mLogout.setOnClickListener(this);
         mNewclassmate.setOnClickListener(this);
@@ -185,7 +181,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case android.R.id.home:
                 mdrawer_layout.openDrawer(GravityCompat.START);
                 break;
-            //地图
+            //校园地图
             case R.id.baidumap:
                 if (new IsLogin().isLogin()) {
                     gotoBaiduMap();
@@ -231,26 +227,42 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             case R.id.logout:
                 gotoLoginOut();
                 break;
+            case R.id.siv_begin:
+                mdrawer_layout.closeDrawers();
+                siv_begin.setBackgroundResource(R.drawable.circle_background);
+                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                mToolbar.setTitle("智慧南大");
+                replaceFragment(new BeginPageFragment());
+                break;
             case R.id.newclassmate:
                 replaceFragment(new NewSchoolMateFragment());
                 mToolbar.setTitle("学生导航");
-                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mNewclassmate.setBackgroundResource(R.drawable.circle_background);
+                //mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.schoolyellow:
                 replaceFragment(new SchoolYellowFragment());
                 mToolbar.setTitle("校园生活");
-                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mSchoolyellow.setBackgroundResource(R.drawable.circle_background);
+                //mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
                 break;
             case R.id.schoolnews:
                 replaceFragment(new SchoolNewsFragment());
                 mToolbar.setTitle("学校新闻");
-                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                mSchoolnews.setBackgroundResource(R.drawable.circle_background);
+                //mSchoolnews.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
+
                 break;
         }
     }
@@ -334,7 +346,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         } else {
             mTv_state.setText("点击登录");
             mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_avatar_man));
-//            mIcon_image.setImageResource(R.mipmap.default_avatar_man);
         }
     }
 

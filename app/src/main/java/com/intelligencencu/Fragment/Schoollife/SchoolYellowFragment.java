@@ -34,6 +34,7 @@ public class SchoolYellowFragment extends Fragment {
     private TextView mfratext4;
     //用于判断当前是第几个Fragment界面
     private int position = 1;
+    private BeginPageActivity.MyOnTouchListener myOnTouchListener;
 
     @Nullable
     @Override
@@ -93,7 +94,7 @@ public class SchoolYellowFragment extends Fragment {
                 return false;
             }
         });
-        BeginPageActivity.MyOnTouchListener myOnTouchListener = new BeginPageActivity.MyOnTouchListener() {
+        myOnTouchListener = new BeginPageActivity.MyOnTouchListener() {
             @Override
             public boolean onTouch(MotionEvent ev) {
                 boolean result = detector.onTouchEvent(ev);
@@ -197,9 +198,6 @@ public class SchoolYellowFragment extends Fragment {
         mfratext2 = (TextView) view.findViewById(R.id.fratext2);
         mfratext3 = (TextView) view.findViewById(R.id.fratext3);
         mfratext4 = (TextView) view.findViewById(R.id.fratext4);
-        mlay1.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        mfratext1.setTextColor(getResources().getColor(R.color.colorPrimary));
-        replaceFragment(new SchoolPhoneFragment());
     }
 
 
@@ -243,5 +241,14 @@ public class SchoolYellowFragment extends Fragment {
             case 4:
                 break;
         }
+    }
+
+
+    //注意当有多个Fragment使用GestureDetector的时候，在每个使用界面销毁时一定得反注册掉
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //当这个fragmentation销毁时注销掉
+        ((BeginPageActivity) getActivity()).unregisterMyOnTouchListener(myOnTouchListener);
     }
 }
