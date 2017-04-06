@@ -136,6 +136,9 @@ public class MapActivity extends AppCompatActivity {
             case R.id.satellitemap:
                 baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
                 break;
+            case R.id.allviewmap:
+                gotoPanoramaActivity();
+                break;
             case R.id.mylocation:
                 if (location != null) {
                     LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -148,6 +151,13 @@ public class MapActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    private void gotoPanoramaActivity() {
+        Intent intent = new Intent(MapActivity.this, PanoramaActivity.class);
+        intent.putExtra("latitude",latitude);
+        intent.putExtra("longitude",longitude);
+        startActivity(intent);
     }
 
     //运行时权限结果处理

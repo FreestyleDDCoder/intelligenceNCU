@@ -13,7 +13,7 @@ import android.view.animation.OvershootInterpolator;
 
 import com.bumptech.glide.Glide;
 import com.intelligencencu.activity.ShowNewsActivity;
-import com.intelligencencu.entity.NcuNews;
+import com.intelligencencu.entity.Scenery;
 import com.intelligencencu.intelligencencu.R;
 
 import java.util.List;
@@ -34,7 +34,7 @@ import dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout;
  */
 
 public class SchoolSceneryAdapter extends RecyclerView.Adapter<SchoolSceneryAdapter.ViewHolder> {
-private List<NcuNews> mncunews;
+private List<Scenery> mncunews;
 private Context mcontext;
 
 static class ViewHolder extends RecyclerView.ViewHolder {
@@ -52,7 +52,7 @@ static class ViewHolder extends RecyclerView.ViewHolder {
     }
 }
 
-    public SchoolSceneryAdapter(List<NcuNews> ncunewsList) {
+    public SchoolSceneryAdapter(List<Scenery> ncunewsList) {
         mncunews = ncunewsList;
     }
 
@@ -68,7 +68,7 @@ static class ViewHolder extends RecyclerView.ViewHolder {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final NcuNews ncuNews = mncunews.get(position);
+        final Scenery ncuNews = mncunews.get(position);
         holder.title.setText(ncuNews.getTitle() + "\n" + ncuNews.getTime());
         Glide.with(mcontext).load(ncuNews.getImg()).into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ static class ViewHolder extends RecyclerView.ViewHolder {
         holder.sll_ncunews.getSpringingHandlerController().addSpringingHandler(new SpringingTouchDragHandler(mcontext, holder.sll_ncunews).setBackInterpolator(new OvershootInterpolator()).setBackDuration(SpringingTouchDragHandler.DURATION_LONG).setDirection(SpringingTouchDragHandler.DIRECTOR_BOTTOM | SpringingTouchDragHandler.DIRECTOR_TOP).setMinDistance(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, mcontext.getResources().getDisplayMetrics())));
     }
 
-    private void gotoShowView(NcuNews ncuNews) {
+    private void gotoShowView(Scenery ncuNews) {
         Intent intent = new Intent(mcontext, ShowNewsActivity.class);
         intent.putExtra("title", ncuNews.getTitle());
         intent.putExtra("content", ncuNews.getContent());

@@ -15,4 +15,8 @@
         android:id="@+id/satellitemap"
         android:title="卫星地图"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/allviewmap"
+        android:title="全景地图"
+        app:showAsAction="never"/>
 </menu>

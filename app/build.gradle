@@ -5,7 +5,9 @@ android {
     buildToolsVersion "25.0.2"
 
     sourceSets {
-        main.jniLibs.srcDirs = ['libs']
+         main.jniLibs.srcDirs = ['libs']
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
     }
 
     defaultConfig {

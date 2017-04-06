@@ -19,6 +19,7 @@ import com.intelligencencu.adapter.NcuNewsAdapter;
 import com.intelligencencu.adapter.SchoolSceneryAdapter;
 import com.intelligencencu.db.File;
 import com.intelligencencu.entity.NcuNews;
+import com.intelligencencu.entity.Scenery;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.ToastUntil;
 
@@ -42,7 +43,7 @@ public class SchoolSceneryFragment extends Fragment {
     private String path = null;
     private RecyclerView rlv_ncunews;
     private SchoolSceneryAdapter adapter = null;
-    private List<NcuNews> ncuNewsList = null;
+    private List<Scenery> ncuNewsList = null;
 
     @Nullable
     @Override
@@ -75,7 +76,7 @@ public class SchoolSceneryFragment extends Fragment {
         Gson gson = new Gson();
         ncuNewsList = gson.fromJson(path, new TypeToken<List<NcuNews>>() {
         }.getType());
-        for (NcuNews ncuNews : ncuNewsList) {
+        for (Scenery ncuNews : ncuNewsList) {
             Log.d("schoolOverView", ncuNews.getContent() + ncuNews.getTitle());
         }
     }
