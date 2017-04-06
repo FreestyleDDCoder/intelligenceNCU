@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -130,25 +131,6 @@ public class SchoolCarFragment extends Fragment {
                 }
             }
         });
-        //http://bmob-cdn-5986.b0.upaiyun.com/2017/03/26/4ef56a164067bccf801e94386b58c505.json
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                super.run();
-//                try {
-//                    String url = "http://bmob-cdn-5986.b0.upaiyun.com/2017/03/26/4ef56a164067bccf801e94386b58c505.json";
-//                    OkHttpClient client = new OkHttpClient();
-//                    Request request = new Request.Builder().url(url).build();
-//                    Response response = client.newCall(request).execute();
-//                    path = response.body().string();
-//                    Message message = new Message();
-//                    message.what = 0;
-//                    handler.sendMessage(message);
-//                } catch (Exception e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        }.start();
     }
 
     public Handler handler = new Handler() {
@@ -202,6 +184,7 @@ public class SchoolCarFragment extends Fragment {
                 view = View.inflate(getActivity(), R.layout.itme_schoolbus, null);
                 holder = new ViewHolder();
                 holder.Name = (SpringingTextView) view.findViewById(R.id.stv_schoolbus);
+                holder.cv_schoolbus = (CardView) view.findViewById(R.id.cv_schoolbus);
                 view.setTag(holder);
             }
             final SchoolBus bus = schoolBusList.get(position);
@@ -230,5 +213,6 @@ public class SchoolCarFragment extends Fragment {
 
     static class ViewHolder {
         SpringingTextView Name;
+        CardView cv_schoolbus;
     }
 }

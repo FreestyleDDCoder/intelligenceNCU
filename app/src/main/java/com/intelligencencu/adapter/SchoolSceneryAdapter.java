@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.intelligencencu.activity.ShowNewsActivity;
-import com.intelligencencu.activity.ShowViewActivity;
 import com.intelligencencu.entity.NcuNews;
 import com.intelligencencu.intelligencencu.R;
 
@@ -31,30 +29,30 @@ import dym.unique.com.springinglayoutlibrary.view.SpringingTextView;
 import dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout;
 
 /**
- * Created by liangzhan on 17-3-30.
- * 昌大要闻适配器
+ * Created by liangzhan on 17-4-6.
+ * 校园风光适配器
  */
 
-public class NcuNewsAdapter extends RecyclerView.Adapter<NcuNewsAdapter.ViewHolder> {
-    private List<NcuNews> mncunews;
-    private Context mcontext;
+public class SchoolSceneryAdapter extends RecyclerView.Adapter<SchoolSceneryAdapter.ViewHolder> {
+private List<NcuNews> mncunews;
+private Context mcontext;
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
-        SpringingImageView imageView;
-        SpringingTextView title;
-        SpringingLinearLayout sll_ncunews;
+static class ViewHolder extends RecyclerView.ViewHolder {
+    CardView cardView;
+    SpringingImageView imageView;
+    SpringingTextView title;
+    SpringingLinearLayout sll_ncunews;
 
-        public ViewHolder(View view) {
-            super(view);
-            cardView = (CardView) view;
-            imageView = (SpringingImageView) view.findViewById(R.id.siv_ncunews);
-            title = (SpringingTextView) view.findViewById(R.id.stv_ncunews);
-            sll_ncunews = (SpringingLinearLayout) view.findViewById(R.id.sll_ncunews);
-        }
+    public ViewHolder(View view) {
+        super(view);
+        cardView = (CardView) view;
+        imageView = (SpringingImageView) view.findViewById(R.id.siv_ncunews);
+        title = (SpringingTextView) view.findViewById(R.id.stv_ncunews);
+        sll_ncunews = (SpringingLinearLayout) view.findViewById(R.id.sll_ncunews);
     }
+}
 
-    public NcuNewsAdapter(List<NcuNews> ncunewsList) {
+    public SchoolSceneryAdapter(List<NcuNews> ncunewsList) {
         mncunews = ncunewsList;
     }
 

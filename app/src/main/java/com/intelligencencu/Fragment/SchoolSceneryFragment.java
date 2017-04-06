@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment.News;
+package com.intelligencencu.Fragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.intelligencencu.adapter.FastNewsAdapter;
 import com.intelligencencu.adapter.NcuNewsAdapter;
+import com.intelligencencu.adapter.SchoolSceneryAdapter;
 import com.intelligencencu.db.File;
 import com.intelligencencu.entity.NcuNews;
 import com.intelligencencu.intelligencencu.R;
@@ -33,21 +33,21 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by liangzhan on 17-3-30.
- * 学校快讯Fragment
+ * Created by liangzhan on 17-4-6.
+ * 校园风光Fragment
  */
 
-public class FastNewsFragment extends Fragment {
+public class SchoolSceneryFragment extends Fragment {
     private SwipeRefreshLayout swip_ncunews;
     private String path = null;
     private RecyclerView rlv_ncunews;
-    private FastNewsAdapter adapter = null;
+    private SchoolSceneryAdapter adapter = null;
     private List<NcuNews> ncuNewsList = null;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fastnews, container, false);
+        View view = inflater.inflate(R.layout.fragment_scenery, container, false);
         initView(view);
         initEvent();
         gotofindJson();
@@ -84,7 +84,7 @@ public class FastNewsFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         rlv_ncunews.setLayoutManager(layoutManager);
         if (ncuNewsList != null) {
-            adapter = new FastNewsAdapter(ncuNewsList);
+            adapter = new SchoolSceneryAdapter(ncuNewsList);
             rlv_ncunews.setAdapter(adapter);
         } else {
             ToastUntil.showShortToast(getActivity(), "数据异常");
@@ -101,15 +101,15 @@ public class FastNewsFragment extends Fragment {
     }
 
     private void initView(View view) {
-        swip_ncunews = (SwipeRefreshLayout) view.findViewById(R.id.swip_fastnews);
+        swip_ncunews = (SwipeRefreshLayout) view.findViewById(R.id.swip_scenery);
         swip_ncunews.setColorSchemeResources(R.color.colorPrimary);
         swip_ncunews.setRefreshing(true);
-        rlv_ncunews = (RecyclerView) view.findViewById(R.id.rlv_fastnews);
+        rlv_ncunews = (RecyclerView) view.findViewById(R.id.rlv_scenery);
     }
 
     private void gotofindJson() {
         BmobQuery<File> query = new BmobQuery<>();
-        query.getObject("lVqQHHHO", new QueryListener<File>() {
+        query.getObject("B1I6000A", new QueryListener<File>() {
             @Override
             public void done(File file, BmobException e) {
                 if (e == null) {

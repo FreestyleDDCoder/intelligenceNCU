@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.intelligencencu.activity.ShowNewsActivity;
-import com.intelligencencu.activity.ShowViewActivity;
 import com.intelligencencu.entity.NcuNews;
 import com.intelligencencu.intelligencencu.R;
 
@@ -31,11 +29,11 @@ import dym.unique.com.springinglayoutlibrary.view.SpringingTextView;
 import dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout;
 
 /**
- * Created by liangzhan on 17-3-30.
- * 昌大要闻适配器
+ * Created by liangzhan on 17-4-6.
+ * 美文界面适配器
  */
 
-public class NcuNewsAdapter extends RecyclerView.Adapter<NcuNewsAdapter.ViewHolder> {
+public class FastNewsAdapter extends RecyclerView.Adapter<FastNewsAdapter.ViewHolder> {
     private List<NcuNews> mncunews;
     private Context mcontext;
 
@@ -54,7 +52,7 @@ public class NcuNewsAdapter extends RecyclerView.Adapter<NcuNewsAdapter.ViewHold
         }
     }
 
-    public NcuNewsAdapter(List<NcuNews> ncunewsList) {
+    public FastNewsAdapter(List<NcuNews> ncunewsList) {
         mncunews = ncunewsList;
     }
 

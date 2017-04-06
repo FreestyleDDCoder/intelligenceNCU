@@ -27,6 +27,7 @@ import com.intelligencencu.Fragment.BeginPageFragment;
 import com.intelligencencu.Fragment.Classmate.NewSchoolMateFragment;
 import com.intelligencencu.Fragment.SchoolMessageFragment;
 import com.intelligencencu.Fragment.News.SchoolNewsFragment;
+import com.intelligencencu.Fragment.SchoolSceneryFragment;
 import com.intelligencencu.Fragment.Schoollife.SchoolYellowFragment;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
@@ -192,6 +193,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 break;
             //学校概况
             case R.id.schoolpresentation:
+                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
                 mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
                 mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
@@ -200,7 +202,12 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 break;
             //校园风光
             case R.id.schoolview:
-
+                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
+                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
+                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                mToolbar.setTitle("校园风光");
+                replaceFragment(new SchoolSceneryFragment());
                 break;
         }
         return true;
