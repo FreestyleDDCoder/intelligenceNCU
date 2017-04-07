@@ -74,7 +74,7 @@ public class SchoolSceneryFragment extends Fragment {
 
     private void parseJSONWithGSON(String path) {
         Gson gson = new Gson();
-        ncuNewsList = gson.fromJson(path, new TypeToken<List<NcuNews>>() {
+        ncuNewsList = gson.fromJson(path, new TypeToken<List<Scenery>>() {
         }.getType());
         for (Scenery ncuNews : ncuNewsList) {
             Log.d("schoolOverView", ncuNews.getContent() + ncuNews.getTitle());

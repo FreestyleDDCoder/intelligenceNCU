@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -11,29 +13,33 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.baidu.lbsapi.model.BaiduPanoData;
+import com.baidu.lbsapi.panoramaview.PanoramaRequest;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.bumptech.glide.Glide;
 import com.intelligencencu.intelligencencu.R;
 
 import java.util.ArrayList;
 
-import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
+import dym.unique.com.springinglayoutlibrary.view.SpringingImageView;
 import dym.unique.com.springinglayoutlibrary.view.SpringingTextView;
-import dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout;
 
 /**
  * Created by liangzhan on 17-3-23.
@@ -47,9 +53,12 @@ public class MapActivity extends AppCompatActivity {
     private MapView mMv_baiduview;
     private BaiduMap baiduMap;
     private boolean isFirstLocate = true;
-    private double latitude;
-    private double longitude;
+    private double latitude = 28.65456325298023;
+    private double longitude = 115.80237329006195;
     private BDLocation location;
+    private SpringingImageView pic;
+    private View view;
+    private final String baseUrl = "http://pcsv1.map.bdimg.com/scape/?qt=pdata&pos=0_0&z=0&sid=";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,8 +68,48 @@ public class MapActivity extends AppCompatActivity {
         initEvent();
     }
 
-    private void initEvent() {
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 0x01) {
+                String url = (String) msg.obj;
+                Glide.with(MapActivity.this).load(url).into(pic);
+                LatLng point = new LatLng(latitude, longitude);
+                InfoWindow mInfoWindow = new InfoWindow(view, point, -57);
+                //显示InfoWindow
+                baiduMap.showInfoWindow(mInfoWindow);
+            }
+        }
+    };
 
+    private void checkpermission() {
+        //        运行时权限
+        ArrayList<String> permissionList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(MapActivity.this, permissions, 1);
+        } else {
+            requestLocation();
+        }
+    }
+
+    private void initEvent() {
+        pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoPanoramaActivity();
+            }
+        });
     }
 
     private void initUI() {
@@ -89,24 +138,31 @@ public class MapActivity extends AppCompatActivity {
 
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
+        //检查权限是否符合要求
+        checkpermission();
+        view = LayoutInflater.from(MapActivity.this).inflate(R.layout.pano_overlay, null);
+        pic = (SpringingImageView) view.findViewById(R.id.panoImageView);
+        pic.setIsCircleImage(true);
+        gotopano();
+    }
 
-//        运行时权限
-        ArrayList<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(MapActivity.this, permissions, 1);
-        } else {
-            requestLocation();
-        }
+    private void gotopano() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                PanoramaRequest request = PanoramaRequest.getInstance(MapActivity.this);
+                BaiduPanoData panoramaInfoByLatLon = request.getPanoramaInfoByLatLon(longitude, latitude);
+                //开发者可以判断是否有街景
+                if (panoramaInfoByLatLon.hasStreetPano()) {
+                    String pid = baseUrl + panoramaInfoByLatLon.getPid();
+                    Message message = new Message();
+                    message.what = 0x01;
+                    message.obj = pid;
+                    handler.sendMessage(message);
+                }
+            }
+        }.start();
     }
 
     private void requestLocation() {
@@ -155,8 +211,8 @@ public class MapActivity extends AppCompatActivity {
 
     private void gotoPanoramaActivity() {
         Intent intent = new Intent(MapActivity.this, PanoramaActivity.class);
-        intent.putExtra("latitude",latitude);
-        intent.putExtra("longitude",longitude);
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
         startActivity(intent);
     }
 

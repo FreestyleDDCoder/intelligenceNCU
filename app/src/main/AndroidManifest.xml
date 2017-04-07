@@ -35,6 +35,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
+        android:name="com.intelligencencu.PanoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/app_icon"
         android:label="智慧南大"
@@ -66,9 +67,7 @@
         <activity android:name="com.intelligencencu.activity.ShowNewsActivity"/>
 
         <activity android:name="com.intelligencencu.activity.PanoramaActivity"
-            android:label="全景地图"
-            android:screenOrientation="sensor"
-            android:configChanges="orientation|keyboardHidden"/>
+            android:label="全景地图" />
         <!--地图-->
         <service
             android:name="com.baidu.location.f"

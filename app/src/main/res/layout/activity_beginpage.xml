@@ -43,8 +43,8 @@
 
                 <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
                     android:id="@+id/siv_begin"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="#FFF"
                     android:src="@mipmap/beginpage" />
             </LinearLayout>
@@ -58,8 +58,8 @@
 
                 <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
                     android:id="@+id/newclassmate"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="#FFF"
                     android:src="@mipmap/newclassmate" />
             </LinearLayout>
@@ -73,8 +73,8 @@
 
                 <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
                     android:id="@+id/schoolyellow"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="#FFF"
                     android:src="@mipmap/schoolyellow" />
             </LinearLayout>
@@ -88,8 +88,8 @@
 
                 <dym.unique.com.springinglayoutlibrary.view.SpringingImageView
                     android:id="@+id/schoolnews"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="#FFF"
                     android:src="@mipmap/schoolnews" />
             </LinearLayout>

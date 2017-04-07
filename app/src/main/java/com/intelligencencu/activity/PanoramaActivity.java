@@ -1,18 +1,17 @@
 package com.intelligencencu.activity;
 
-import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.baidu.lbsapi.BMapManager;
-import com.baidu.lbsapi.MKGeneralListener;
 import com.baidu.lbsapi.panoramaview.PanoramaView;
+import com.intelligencencu.PanoApplication;
 import com.intelligencencu.intelligencencu.R;
 
 /**
@@ -28,6 +27,11 @@ public class PanoramaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBMapManager();
+        initView();
+    }
+
+    private void initView() {
         setContentView(R.layout.activity_panorama);
         Toolbar tb_panorama = (Toolbar) findViewById(R.id.tb_panorama);
         setSupportActionBar(tb_panorama);
@@ -37,19 +41,21 @@ public class PanoramaActivity extends AppCompatActivity {
         }
         pv_panorama = (PanoramaView) findViewById(R.id.pv_panorama);
         Intent intent = getIntent();
-        double latitude = intent.getDoubleExtra("latitude", 28.65456325298023);
-        double longitude = intent.getDoubleExtra("longitude", 115.80237329006195);
-        Application application = getApplication();
-        if (bMapManager == null) {
-            bMapManager = new BMapManager(application);
-            bMapManager.init(new MKGeneralListener() {
-                @Override
-                public void onGetPermissionState(int i) {
-
-                }
-            });
+        if (intent != null) {
+            double latitude = intent.getDoubleExtra("latitude", 28.65456325298023);
+            double longitude = intent.getDoubleExtra("longitude", 115.80237329006195);
+            Log.d("latitude+longitude", "" + latitude + "/" + longitude);
+            pv_panorama.setPanorama(longitude, latitude);
+            pv_panorama.setPanoramaImageLevel(PanoramaView.ImageDefinition.ImageDefinitionHigh);
         }
-        pv_panorama.setPanorama(longitude, latitude);
+    }
+
+    private void initBMapManager() {
+        PanoApplication app = (PanoApplication) this.getApplication();
+        if (app.mBMapManager == null) {
+            app.mBMapManager = new BMapManager(app);
+            app.mBMapManager.init(new PanoApplication.MyGeneralListener());
+        }
     }
 
     @Override
