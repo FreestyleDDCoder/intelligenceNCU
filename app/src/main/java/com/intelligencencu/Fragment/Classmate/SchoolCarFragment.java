@@ -194,21 +194,20 @@ public class SchoolCarFragment extends Fragment {
             holder.Name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(bus.getName());
-                    builder.setMessage("候车地点：" + bus.getNote() + "\n" + "\n" + "行车路线：" + bus.getPathway() + "\n" + "\n" + "发车时间：" + bus.getTime());
-                    builder.setNegativeButton("返回", null);
-                    builder.show();
-                    Log.d("bus", bus.getName() + bus.getTime() + bus.getPathway() + bus.getName());
+                    showDialog(bus);
                 }
             });
-            showView(holder);
             return view;
         }
-    }
 
-    private void showView(ViewHolder holder) {
-        holder.Name.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(getActivity(), holder.Name));
+        private void showDialog(SchoolBus bus) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(bus.getName());
+            builder.setMessage("候车地点：" + bus.getNote() + "\n" + "\n" + "行车路线：" + bus.getPathway() + "\n" + "\n" + "发车时间：" + bus.getTime());
+            builder.setNegativeButton("返回", null);
+            builder.show();
+            Log.d("bus", bus.getName() + bus.getTime() + bus.getPathway() + bus.getName());
+        }
     }
 
     static class ViewHolder {
