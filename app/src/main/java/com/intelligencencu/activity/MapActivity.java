@@ -138,12 +138,13 @@ public class MapActivity extends AppCompatActivity {
 
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
-        //检查权限是否符合要求
-        checkpermission();
         view = LayoutInflater.from(MapActivity.this).inflate(R.layout.pano_overlay, null);
         pic = (SpringingImageView) view.findViewById(R.id.panoImageView);
         pic.setIsCircleImage(true);
         gotopano();
+
+        //检查权限是否符合要求
+        checkpermission();
     }
 
     private void gotopano() {
