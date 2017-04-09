@@ -214,6 +214,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void gotoBaiduMap() {
+
         Intent intent = new Intent(BeginPageActivity.this, MapActivity.class);
         startActivity(intent);
     }

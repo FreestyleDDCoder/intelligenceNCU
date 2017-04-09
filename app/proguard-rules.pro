@@ -25,4 +25,3 @@
 #-renamesourcefileattribute SourceFile
 -keepattributes Signature
 -keepattributes *Annotation
--dontwarn **

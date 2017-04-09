@@ -141,10 +141,11 @@ public class MapActivity extends AppCompatActivity {
         view = LayoutInflater.from(MapActivity.this).inflate(R.layout.pano_overlay, null);
         pic = (SpringingImageView) view.findViewById(R.id.panoImageView);
         pic.setIsCircleImage(true);
-        gotopano();
 
         //检查权限是否符合要求
         checkpermission();
+        //查看位置附近是否存在街景
+        gotopano();
     }
 
     private void gotopano() {

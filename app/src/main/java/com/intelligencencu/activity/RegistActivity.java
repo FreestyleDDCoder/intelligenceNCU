@@ -103,8 +103,6 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         mStv_regist.setOnClickListener(this);
         mBoys.setOnClickListener(this);
         mGirls.setOnClickListener(this);
-
-
     }
 
     private void initSpringLayout() {

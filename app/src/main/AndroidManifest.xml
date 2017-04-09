@@ -68,6 +68,8 @@
 
         <activity android:name="com.intelligencencu.activity.PanoramaActivity"
             android:label="全景地图" />
+        <activity android:name="com.intelligencencu.activity.LostFoundActivity"
+            android:label="失物招领"/>
         <!--地图-->
         <service
             android:name="com.baidu.location.f"

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_lostfound"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+       >
+    </android.support.v7.widget.Toolbar>
+    <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
+        android:id="@+id/sll_lostfound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            app:cardCornerRadius="4dp">
+
+            <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                    android:id="@+id/stv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="展示标题:"
+                    android:textSize="16sp" />
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingEditText
+                    android:id="@+id/set_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:visibility="invisible"
+            app:cardCornerRadius="4dp">
+
+            <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
+                android:id="@+id/sll_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                    android:id="@+id/stv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="联系方式:"
+                    android:textSize="16sp" />
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingEditText
+                    android:id="@+id/set_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:visibility="invisible"
+            app:cardCornerRadius="4dp">
+
+            <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
+                android:id="@+id/sll_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                    android:id="@+id/stv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="详细描述:"
+                    android:textSize="16sp" />
+
+                <dym.unique.com.springinglayoutlibrary.view.SpringingEditText
+                    android:id="@+id/set_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLines="6"
+                    android:minLines="5" />
+            </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
+            android:id="@+id/sll_lostfound2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingButton
+                android:id="@+id/sb_lost"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="?attr/colorPrimary"
+                android:gravity="center"
+                android:text="发布丢失"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingButton
+                android:id="@+id/sb_found"
+                android:layout_width="250dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="?attr/colorPrimary"
+                android:gravity="center"
+                android:text="发布招领"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+        </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
+    </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
+</LinearLayout>
