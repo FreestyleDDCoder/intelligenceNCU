@@ -83,26 +83,6 @@ public class MapActivity extends AppCompatActivity {
         }
     };
 
-    private void checkpermission() {
-        //        运行时权限
-        ArrayList<String> permissionList = new ArrayList<>();
-        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.READ_PHONE_STATE);
-        }
-        if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (!permissionList.isEmpty()) {
-            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-            ActivityCompat.requestPermissions(MapActivity.this, permissions, 1);
-        } else {
-            requestLocation();
-        }
-    }
-
     private void initEvent() {
         pic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,8 +122,9 @@ public class MapActivity extends AppCompatActivity {
         pic = (SpringingImageView) view.findViewById(R.id.panoImageView);
         pic.setIsCircleImage(true);
 
-        //检查权限是否符合要求
-        checkpermission();
+        requestLocation();
+//        //检查权限是否符合要求
+//        checkpermission();
         //查看位置附近是否存在街景
         gotopano();
     }
@@ -216,30 +197,6 @@ public class MapActivity extends AppCompatActivity {
         intent.putExtra("latitude", latitude);
         intent.putExtra("longitude", longitude);
         startActivity(intent);
-    }
-
-    //运行时权限结果处理
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case 1:
-                if (grantResults.length > 0) {
-                    for (int result : grantResults) {
-                        //当所有权限都开启后才进行地图活动
-                        if (result != PackageManager.PERMISSION_GRANTED) {
-                            Toast.makeText(MapActivity.this, "必须同意所有权限才能使用本功能", Toast.LENGTH_SHORT).show();
-                            finish();
-                            return;
-                        }
-                    }
-                    requestLocation();
-                } else {
-                    Toast.makeText(MapActivity.this, "发生未知错误", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                break;
-            default:
-        }
     }
 
     //处理位置信息

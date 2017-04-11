@@ -438,6 +438,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     public interface MyOnTouchListener {
-        public boolean onTouch(MotionEvent ev);
+        boolean onTouch(MotionEvent ev);
     }
 }
