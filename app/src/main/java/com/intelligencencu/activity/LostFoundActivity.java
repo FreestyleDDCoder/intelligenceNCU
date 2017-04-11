@@ -5,16 +5,18 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
-import com.intelligencencu.db.Found;
 import com.intelligencencu.db.Lost;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.ToastUntil;
 
+import cn.bmob.v3.BmobACL;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
@@ -77,68 +79,58 @@ public class LostFoundActivity extends AppCompatActivity {
         sb_lost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoLost();
+                gotoLostFound("1");
             }
         });
 
         sb_found.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoFound();
+                gotoLostFound("2s");
             }
         });
 
     }
-//招领
-    private void gotoFound() {
+
+    private void gotoLostFound(String s) {
+
         String title = set_title.getText().toString();
         String phone = set_phone.getText().toString();
         String desc = set_desc.getText().toString();
-//        Found found = new Found();
-//        found.setTitle(title);
-//        found.setPhone(phone);
-//        found.setDescribe(desc);
-//        found.setObjectId("1");
-        Lost lost = new Lost();
-        lost.setDescribe(desc);
-        lost.setPhone(phone);
-        lost.setTitle(title);
-        lost.setFlag("2");
-        lost.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e == null) {
-                    //信息添加成功
-                    ToastUntil.showShortToast(LostFoundActivity.this, "添加招领成功，请下拉刷新数据！");
-                    finish();
-                } else {
-                    ToastUntil.showShortToast(LostFoundActivity.this, "添加失败" + e);
+        if (TextUtils.isEmpty(title)) {
+            ToastUntil.showShortToast(LostFoundActivity.this, "展标题不能为空！");
+        } else if (TextUtils.isEmpty(phone)) {
+            ToastUntil.showShortToast(LostFoundActivity.this, "联系方式不能为空！");
+        } else if (TextUtils.isEmpty(desc)) {
+            ToastUntil.showShortToast(LostFoundActivity.this, "详细描述不能为空！");
+        } else {
+            //创建一个ACL对象
+            BmobACL acl = new BmobACL();
+            // 设置所有人可读的权限
+            acl.setPublicReadAccess(true);
+            // 设置当前用户可写的权限
+            BmobUser currentUser = BmobUser.getCurrentUser();
+            acl.setWriteAccess(currentUser, true);
+            Lost lost = new Lost();
+            lost.setDescribe(desc);
+            lost.setPhone(phone);
+            lost.setTitle(title);
+            lost.setFlag(s);
+            lost.setUsername(currentUser.getUsername());
+            lost.setACL(acl);
+            lost.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e == null) {
+                        //信息添加成功
+                        ToastUntil.showShortToast(LostFoundActivity.this, s.equals("1") ? "添加丢失成功,请下拉刷新数据！" : "添加招领成功，请下拉刷新数据！");
+                        finish();
+                    } else {
+                        ToastUntil.showShortToast(LostFoundActivity.this, "添加失败" + e);
+                    }
                 }
-            }
-        });
-    }
-//丢失
-    private void gotoLost() {
-        String title = set_title.getText().toString();
-        String phone = set_phone.getText().toString();
-        String desc = set_desc.getText().toString();
-        Lost lost = new Lost();
-        lost.setDescribe(desc);
-        lost.setPhone(phone);
-        lost.setTitle(title);
-        lost.setFlag("1");
-        lost.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e == null) {
-                    //信息添加成功
-                    ToastUntil.showShortToast(LostFoundActivity.this, "添加丢失成功,请下拉刷新数据！");
-                    finish();
-                } else {
-                    ToastUntil.showShortToast(LostFoundActivity.this, "添加失败" + e);
-                }
-            }
-        });
+            });
+        }
     }
 
     private void initView() {

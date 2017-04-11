@@ -4,8 +4,8 @@
     android:id="@+id/ll_lf"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
     android:layout_marginBottom="10dp"
+    android:layout_marginTop="5dp"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -19,22 +19,37 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_lostfoundtitle"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:text="标题"
-                android:maxLines="1"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_lostfoundtitle"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:maxLines="1"
+                    android:text="标题"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tv_lfusername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentRight="true"
+                    android:maxLines="1"
+                    android:text="用户名"
+                    android:textSize="18sp" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:text="时间"
                 android:maxLines="1"
+                android:text="时间"
                 android:textSize="16sp" />
 
             <TextView
@@ -42,7 +57,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:maxLines="1"
+                android:maxLines="6"
                 android:text="描述"
                 android:textSize="16sp" />
         </LinearLayout>

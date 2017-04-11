@@ -15,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.intelligencencu.activity.LoginActivity;
 import com.intelligencencu.activity.LostFoundActivity;
 import com.intelligencencu.adapter.LostAdapter;
 import com.intelligencencu.db.Found;
 import com.intelligencencu.db.Lost;
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.ToastUntil;
 
 import java.util.List;
@@ -80,16 +82,6 @@ public class LostFoundFragment extends Fragment {
             public void done(List<Lost> list, BmobException e) {
                 if (e == null) {
                     mLostlist = list;
-                    //保证mLostlist为同一个对象
-//                    for (Lost lost : list) {
-//                        Lost currentLost = new Lost();
-//                        currentLost.setTitle(lost.getTitle());
-//                        currentLost.setPhone(lost.getPhone());
-//                        currentLost.setFlag(lost.getFlag());
-//                        currentLost.setDescribe(lost.getDescribe());
-//                        mLostlist.add(currentLost);
-//                        Log.d("lostfoundlist", lost.getTitle() + lost.getDescribe());
-//                    }
                     handler.sendEmptyMessage(0);
                 } else {
                     ToastUntil.showShortToast(getActivity(), "" + e);
@@ -118,7 +110,7 @@ public class LostFoundFragment extends Fragment {
     }
 
     private void gotoLostFound() {
-        Intent intent = new Intent(getActivity(), LostFoundActivity.class);
+        Intent intent = new IsLogin().isLogin() ? new Intent(getActivity(), LostFoundActivity.class) : new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
     }
 

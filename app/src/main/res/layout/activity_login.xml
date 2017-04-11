@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
-                android:hint="用户名或邮箱号码"
+                android:hint="邮箱号码或昵称"
                 android:textColor="#666666"
                 android:textSize="18sp" />
         </LinearLayout>

@@ -46,40 +46,11 @@
             android:visibility="invisible" />
 
         <LinearLayout
-            android:id="@+id/ll_account2"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:visibility="invisible">
-
-            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
-                android:id="@+id/stv_accountLabel2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="账号"
-                android:textColor="#666666"
-                android:textSize="16sp" />
-
-            <dym.unique.com.springinglayoutlibrary.view.SpringingEditText
-                android:id="@+id/sedt_account2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:hint="请输入你的用户名"
-                android:inputType="number"
-                android:textColor="#666666"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/ll_EmailSet"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal"
             android:visibility="invisible">
 
@@ -99,6 +70,34 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="8dp"
                 android:hint="请设置你的邮箱"
+                android:textColor="#666666"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_account2"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="invisible">
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingTextView
+                android:id="@+id/stv_accountLabel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="昵称"
+                android:textColor="#666666"
+                android:textSize="16sp" />
+
+            <dym.unique.com.springinglayoutlibrary.view.SpringingEditText
+                android:id="@+id/sedt_account2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:hint="请输入你的用户名"
                 android:textColor="#666666"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -186,7 +185,6 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:visibility="invisible" />
-
 
 
     </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>

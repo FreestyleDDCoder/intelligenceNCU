@@ -1,16 +1,20 @@
 package com.intelligencencu.activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.intelligencencu.Fragment.BeginPageFragment;
 import com.intelligencencu.Fragment.Classmate.NewSchoolMateFragment;
@@ -185,7 +190,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             //校园地图
             case R.id.baidumap:
                 if (new IsLogin().isLogin()) {
-                    gotoBaiduMap();
+                    checkpermission();
                 } else {
                     ToastUntil.showShortToast(BeginPageActivity.this, "请先登录再使用本功能！");
                     gotoLoginActivity();
@@ -214,7 +219,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void gotoBaiduMap() {
-
         Intent intent = new Intent(BeginPageActivity.this, MapActivity.class);
         startActivity(intent);
     }
@@ -372,6 +376,47 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         return bitmap;
     }
 
+    private void checkpermission() {
+        //        运行时权限
+        ArrayList<String> permissionList = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(BeginPageActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (ContextCompat.checkSelfPermission(BeginPageActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE);
+        }
+        if (ContextCompat.checkSelfPermission(BeginPageActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (!permissionList.isEmpty()) {
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
+            ActivityCompat.requestPermissions(BeginPageActivity.this, permissions, 1);
+        } else {
+            gotoBaiduMap();
+        }
+    }
+
+    //运行时权限结果处理
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 1:
+                if (grantResults.length > 0) {
+                    for (int result : grantResults) {
+                        //当所有权限都开启后才进行地图活动
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(BeginPageActivity.this, "必须同意所有权限才能使用本功能", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    gotoBaiduMap();
+                } else {
+                    Toast.makeText(BeginPageActivity.this, "发生未知错误", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+        }
+    }
 
     //以下为触摸监听接口，方便在Fragment中实现触摸事件
     private ArrayList<MyOnTouchListener> onTouchListeners = new ArrayList<MyOnTouchListener>();
