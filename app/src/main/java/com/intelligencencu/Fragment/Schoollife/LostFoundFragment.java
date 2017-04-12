@@ -25,6 +25,7 @@ import com.intelligencencu.utils.ToastUntil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class LostFoundFragment extends Fragment {
 
     private int count = 10;        // 每页的数据是10条
     private int curPage = 0;        // 当前页的编号，从0开始
+    private LostAdapter adapter;
 
     @Nullable
     @Override
@@ -71,7 +73,12 @@ public class LostFoundFragment extends Fragment {
 
     private void initDate() {
         if (mLostlist != null) {
-            rlv_lostfound.setAdapter(new LostAdapter(mLostlist));
+            if (adapter == null) {
+                adapter = new LostAdapter(mLostlist);
+                rlv_lostfound.setAdapter(adapter);
+            } else {
+                adapter.notifyDataSetChanged();
+            }
         } else {
             ToastUntil.showShortToast(getActivity(), "数据为空！");
         }
@@ -82,7 +89,6 @@ public class LostFoundFragment extends Fragment {
     }
 
     private void getList(int page, final int actionType) {
-
         BmobQuery<Lost> query = new BmobQuery<>();
         //按照时间降序
         query.order("-createdAt");
@@ -94,26 +100,24 @@ public class LostFoundFragment extends Fragment {
             page = 0;
             query.setSkip(page);
         }
-
         query.setLimit(count);
         query.findObjects(new FindListener<Lost>() {
-            @Override
-            public void onFinish() {
-                super.onFinish();
-
-            }
-
             @Override
             public void done(List<Lost> list, BmobException e) {
                 if (e == null) {
                     if (list.size() > 0) {
+                        Log.d("list.size()", "" + list.size());
                         if (actionType == STATE_REFRESH) {
                             // 当是下拉刷新操作时，将当前页的编号重置为0，并把bankCards清空，重新添加
                             curPage = 0;
                             if (mLostlist != null)
                                 mLostlist.clear();
                         }
-                        mLostlist = list;
+                        for (Lost lost : list) {
+                            Log.d("list", "" + lost.getTitle());
+                            mLostlist.add(lost);
+                        }
+                        //mLostlist = list;
                         // 这里在每次加载完数据后，将当前页码+1，这样在上拉刷新的onPullUpToRefresh方法中就不需要操作curPage了
                         curPage++;
                     } else if (actionType == STATE_MORE) {
@@ -162,7 +166,7 @@ public class LostFoundFragment extends Fragment {
                     //获取最后一个可见view的位置
                     int lastItemPosition = linearManager.findLastVisibleItemPosition();
                     if (lastItemPosition == count * curPage - 1) {
-                        ToastUntil.showShortToast(getActivity(), "正在加载...");
+                        ToastUntil.showShortToast(getActivity(), "正在加载更多...");
                         getList(curPage, STATE_MORE);
                     }
                     //获取第一个可见view的位置
@@ -186,6 +190,7 @@ public class LostFoundFragment extends Fragment {
         rlv_lostfound = (RecyclerView) view.findViewById(R.id.rlv_lostfound);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rlv_lostfound.setLayoutManager(layoutManager);
+        mLostlist = new ArrayList<>();
     }
 
     @Override
