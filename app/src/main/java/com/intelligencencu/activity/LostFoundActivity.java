@@ -86,14 +86,13 @@ public class LostFoundActivity extends AppCompatActivity {
         sb_found.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoLostFound("2s");
+                gotoLostFound("2");
             }
         });
 
     }
 
     private void gotoLostFound(String s) {
-
         String title = set_title.getText().toString();
         String phone = set_phone.getText().toString();
         String desc = set_desc.getText().toString();

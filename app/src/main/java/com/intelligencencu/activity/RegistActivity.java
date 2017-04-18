@@ -233,7 +233,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                     ToastUntil.showShortToast(RegistActivity.this, "请求验证邮件成功，请到" + email + "邮箱中进行激活,方便以后重置密码。");
                     finish();
                 } else {
-                    ToastUntil.showShortToast(RegistActivity.this, "请求验证邮件失败:" + e.getMessage());
+                    ToastUntil.showShortToast(RegistActivity.this, "" + e.getMessage());
                     finish();
                 }
             }
@@ -259,7 +259,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                     uri = saveToSdCard(photo);
                     updateIcon(uri);
                 } else {
-                    ToastUntil.showShortToast(RegistActivity.this, "用户名或电子邮件已经被另一个用户注册。");
+                    ToastUntil.showShortToast(RegistActivity.this, "用户名或电子邮箱已经被另一个用户注册。");
                 }
             }
         });

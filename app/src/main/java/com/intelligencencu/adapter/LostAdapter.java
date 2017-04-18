@@ -80,7 +80,6 @@ public class LostAdapter extends RecyclerView.Adapter<LostAdapter.ViewHolder> {
                 showDescDialog(lost);
             }
         });
-
         Log.d("lostAdapter", lost.getTitle() + lost.getDescribe());
     }
 

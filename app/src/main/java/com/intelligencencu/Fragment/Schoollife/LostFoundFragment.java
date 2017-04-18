@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobDate;
@@ -49,7 +50,7 @@ public class LostFoundFragment extends Fragment {
     private static final int STATE_REFRESH = 0;// 下拉刷新
     private static final int STATE_MORE = 1;// 加载更多
 
-    private int count = 10;        // 每页的数据是10条
+    private int count = 20;        // 每页的数据是20条
     private int curPage = 0;        // 当前页的编号，从0开始
     private LostAdapter adapter;
 
@@ -59,24 +60,18 @@ public class LostFoundFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lostfound, container, false);
         initView(view);
         initEvent();
+        getList(0, STATE_REFRESH);
         return view;
     }
-
-    public Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            initDate();
-            Log.d("initDate()", "到这里了");
-        }
-    };
 
     private void initDate() {
         if (mLostlist != null) {
             if (adapter == null) {
                 adapter = new LostAdapter(mLostlist);
                 rlv_lostfound.setAdapter(adapter);
+                Log.d("null", mLostlist.size() + "");
             } else {
+                Log.d("notifyDataSetChanged", mLostlist.size() + "");
                 adapter.notifyDataSetChanged();
             }
         } else {
@@ -84,7 +79,6 @@ public class LostFoundFragment extends Fragment {
         }
         //使用notifyDataSetChanged方法更新列表数据时，一定要保证数据为同个对象
         //lostAdapter.notifyDataSetChanged();
-        Log.d("notifyDataSetChanged", mLostlist.size() + "");
         swip_lostfound.setRefreshing(false);
     }
 
@@ -114,7 +108,6 @@ public class LostFoundFragment extends Fragment {
                                 mLostlist.clear();
                         }
                         for (Lost lost : list) {
-                            Log.d("list", "" + lost.getTitle());
                             mLostlist.add(lost);
                         }
                         //mLostlist = list;
@@ -125,7 +118,7 @@ public class LostFoundFragment extends Fragment {
                     } else if (actionType == STATE_REFRESH) {
                         ToastUntil.showShortToast(getActivity(), "没有数据");
                     }
-                    handler.sendEmptyMessage(0);
+                    initDate();
                 } else {
                     ToastUntil.showShortToast(getActivity(), "" + e);
                     Log.d("query", "" + e);
@@ -160,18 +153,15 @@ public class LostFoundFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
                 //判断是当前layoutManager是否为LinearLayoutManager
-                // 只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
+                //只有LinearLayoutManager才有查找第一个和最后一个可见view位置的方法
                 if (layoutManager instanceof LinearLayoutManager) {
                     LinearLayoutManager linearManager = (LinearLayoutManager) layoutManager;
                     //获取最后一个可见view的位置
                     int lastItemPosition = linearManager.findLastVisibleItemPosition();
                     if (lastItemPosition == count * curPage - 1) {
-                        ToastUntil.showShortToast(getActivity(), "正在加载更多...");
                         getList(curPage, STATE_MORE);
                     }
-                    //获取第一个可见view的位置
-                    int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                    Log.d("sItemPosition", "" + "" + lastItemPosition + firstItemPosition);
+                    Log.d("sItemPosition", "" + "" + lastItemPosition);
                 }
             }
         });
@@ -191,11 +181,5 @@ public class LostFoundFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rlv_lostfound.setLayoutManager(layoutManager);
         mLostlist = new ArrayList<>();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getList(0, STATE_REFRESH);
     }
 }

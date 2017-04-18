@@ -3,9 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <WebView
-        android:id="@+id/wv_beginPage"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tl_bbs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </WebView>
+        android:layout_height="40dp"
+        />
+
+    <!--可滑动的布局内容-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_beginPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

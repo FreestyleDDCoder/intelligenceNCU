@@ -368,7 +368,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             File file = new File(pathString);
             if (file.exists()) {
                 bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-                //bitmap = BitmapFactory.decodeFile(pathString);
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -402,14 +401,17 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0) {
+                    Boolean isgotomap = true;
                     for (int result : grantResults) {
                         //当所有权限都开启后才进行地图活动
                         if (result != PackageManager.PERMISSION_GRANTED) {
                             Toast.makeText(BeginPageActivity.this, "必须同意所有权限才能使用本功能", Toast.LENGTH_SHORT).show();
+                            isgotomap = false;
                             return;
                         }
                     }
-                    gotoBaiduMap();
+                    if (isgotomap)
+                        gotoBaiduMap();
                 } else {
                     Toast.makeText(BeginPageActivity.this, "发生未知错误", Toast.LENGTH_SHORT).show();
                 }
