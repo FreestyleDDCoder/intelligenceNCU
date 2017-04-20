@@ -81,7 +81,7 @@ public class LostFoundFragment extends Fragment {
         //lostAdapter.notifyDataSetChanged();
         swip_lostfound.setRefreshing(false);
     }
-
+    //查询数据的方法
     private void getList(int page, final int actionType) {
         BmobQuery<Lost> query = new BmobQuery<>();
         //按照时间降序
@@ -160,6 +160,7 @@ public class LostFoundFragment extends Fragment {
                     int lastItemPosition = linearManager.findLastVisibleItemPosition();
                     if (lastItemPosition == count * curPage - 1) {
                         getList(curPage, STATE_MORE);
+                        ToastUntil.showShortToast(getActivity(),"正在加载更多...");
                     }
                     Log.d("sItemPosition", "" + "" + lastItemPosition);
                 }

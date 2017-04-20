@@ -109,9 +109,7 @@
                     />
             </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
         </android.support.v7.widget.CardView>
-
         <dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout
-            android:id="@+id/sll_lostfound2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

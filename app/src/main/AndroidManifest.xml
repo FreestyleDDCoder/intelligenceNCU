@@ -70,6 +70,8 @@
             android:label="全景地图" />
         <activity android:name="com.intelligencencu.activity.LostFoundActivity"
             android:label="失物招领"/>
+        <activity android:name="com.intelligencencu.activity.BbsActivity"
+            android:label="心情地"/>
         <!--地图-->
         <service
             android:name="com.baidu.location.f"

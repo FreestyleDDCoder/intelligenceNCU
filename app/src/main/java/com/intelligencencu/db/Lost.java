@@ -11,7 +11,7 @@ public class Lost extends BmobObject {
     private String title;//标题
     private String describe;//描述
     private String phone;//联系手机
-    private String flag;
+    private String flag;//用于判断的丢失还是招领
 
     public String getUsername() {
         return username;

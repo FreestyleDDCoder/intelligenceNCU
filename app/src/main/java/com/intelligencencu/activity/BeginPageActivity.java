@@ -131,8 +131,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mNewclassmate = (SpringingImageView) findViewById(R.id.newclassmate);
         mSchoolyellow = (SpringingImageView) findViewById(R.id.schoolyellow);
         mSchoolnews = (SpringingImageView) findViewById(R.id.schoolnews);
-
-        siv_begin.setBackgroundResource(R.drawable.circle_background);
+        siv_begin.setBackgroundResource(R.mipmap.beginpage2);
         replaceFragment(new BeginPageFragment());
 
         mNav_view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -148,10 +147,10 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                     //点击主页时的变化
                     case R.id.nav_main:
                         mdrawer_layout.closeDrawers();
-                        siv_begin.setBackgroundResource(R.drawable.circle_background);
-                        mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-                        mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-                        mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                        siv_begin.setBackgroundResource(R.mipmap.beginpage2);
+                        mNewclassmate.setBackgroundResource(R.mipmap.student1);
+                        mSchoolyellow.setBackgroundResource(R.mipmap.life1);
+                        mSchoolnews.setBackgroundResource(R.mipmap.news1);
                         mToolbar.setTitle("智慧南大");
                         replaceFragment(new BeginPageFragment());
                         break;
@@ -198,19 +197,19 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 break;
             //学校概况
             case R.id.schoolpresentation:
-                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
-                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                siv_begin.setBackgroundResource(R.mipmap.beginpage1);
+                mNewclassmate.setBackgroundResource(R.mipmap.student1);
+                mSchoolyellow.setBackgroundResource(R.mipmap.life1);
+                mSchoolnews.setBackgroundResource(R.mipmap.news1);
                 mToolbar.setTitle("学校概况");
                 replaceFragment(new SchoolMessageFragment());
                 break;
             //校园风光
             case R.id.schoolview:
-                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
-                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                siv_begin.setBackgroundResource(R.mipmap.beginpage1);
+                mNewclassmate.setBackgroundResource(R.mipmap.student1);
+                mSchoolyellow.setBackgroundResource(R.mipmap.life1);
+                mSchoolnews.setBackgroundResource(R.mipmap.news1);
                 mToolbar.setTitle("校园风光");
                 replaceFragment(new SchoolSceneryFragment());
                 break;
@@ -241,40 +240,38 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.siv_begin:
                 mdrawer_layout.closeDrawers();
-                siv_begin.setBackgroundResource(R.drawable.circle_background);
-                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                siv_begin.setBackgroundResource(R.mipmap.beginpage2);
+                mNewclassmate.setBackgroundResource(R.mipmap.student1);
+                mSchoolyellow.setBackgroundResource(R.mipmap.life1);
+                mSchoolnews.setBackgroundResource(R.mipmap.news1);
                 mToolbar.setTitle("智慧南大");
                 replaceFragment(new BeginPageFragment());
                 break;
             case R.id.newclassmate:
                 replaceFragment(new NewSchoolMateFragment());
                 mToolbar.setTitle("学生导航");
-                mNewclassmate.setBackgroundResource(R.drawable.circle_background);
-                //mNewclassmate.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
+                mNewclassmate.setBackgroundResource(R.mipmap.student2);
+                siv_begin.setBackgroundResource(R.mipmap.beginpage1);
+                mSchoolyellow.setBackgroundResource(R.mipmap.life1);
+                mSchoolnews.setBackgroundResource(R.mipmap.news1);
                 break;
             case R.id.schoolyellow:
                 replaceFragment(new SchoolYellowFragment());
                 mToolbar.setTitle("校园生活");
-                mSchoolyellow.setBackgroundResource(R.drawable.circle_background);
+                mSchoolyellow.setBackgroundResource(R.mipmap.life2);
                 //mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolnews.setBackgroundColor(getResources().getColor(R.color.white));
-                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
+                mNewclassmate.setBackgroundResource(R.mipmap.student1);
+                siv_begin.setBackgroundResource(R.mipmap.beginpage1);
+                mSchoolnews.setBackgroundResource(R.mipmap.news1);
                 break;
             case R.id.schoolnews:
                 replaceFragment(new SchoolNewsFragment());
                 mToolbar.setTitle("学校新闻");
-                mSchoolnews.setBackgroundResource(R.drawable.circle_background);
+                mSchoolnews.setBackgroundResource(R.mipmap.news2);
                 //mSchoolnews.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                mNewclassmate.setBackgroundColor(getResources().getColor(R.color.white));
-                mSchoolyellow.setBackgroundColor(getResources().getColor(R.color.white));
-                siv_begin.setBackgroundColor(getResources().getColor(R.color.white));
-
+                mNewclassmate.setBackgroundResource(R.mipmap.student1);
+                siv_begin.setBackgroundResource(R.mipmap.beginpage1);
+                mSchoolyellow.setBackgroundResource(R.mipmap.life1);
                 break;
         }
     }

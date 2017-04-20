@@ -45,8 +45,8 @@
                     android:id="@+id/siv_begin"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/beginpage" />
+                    android:background="@mipmap/beginpage1"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -60,8 +60,7 @@
                     android:id="@+id/newclassmate"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/newclassmate" />
+                    android:background="@mipmap/student1" />
             </LinearLayout>
 
             <LinearLayout
@@ -75,8 +74,8 @@
                     android:id="@+id/schoolyellow"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/schoolyellow" />
+                    android:background="@mipmap/life1"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -90,8 +89,8 @@
                     android:id="@+id/schoolnews"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="#FFF"
-                    android:src="@mipmap/schoolnews" />
+                    android:background="@mipmap/news1"
+                    />
             </LinearLayout>
         </LinearLayout>
     </dym.unique.com.springinglayoutlibrary.viewgroup.SpringingLinearLayout>
