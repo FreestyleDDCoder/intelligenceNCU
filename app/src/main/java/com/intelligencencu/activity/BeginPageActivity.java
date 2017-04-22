@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +73,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private SpringingImageView mSchoolnews;
     private Toolbar mToolbar;
     private SpringingImageView siv_begin;
+    private SpringingImageView siv_sexs;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,7 +101,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mTv_state.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mTv_state));
         mLogout.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mLogout).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         // mSl_beginPage.getSpringingHandlerController().addSpringingHandler(new SpringingTouchDragHandler(this, mSl_beginPage).setBackInterpolator(new OvershootInterpolator()).setBackDuration(SpringingTouchDragHandler.DURATION_LONG).setDirection(SpringingTouchDragHandler.DIRECTOR_BOTTOM | SpringingTouchDragHandler.DIRECTOR_TOP).setMinDistance(0, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16, getResources().getDisplayMetrics())));
-
+        siv_sexs.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, siv_sexs).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mIcon_image.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mIcon_image).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mNewclassmate.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mNewclassmate).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
         mSchoolyellow.getSpringingHandlerController().addSpringingHandler(new SpringingTouchPointHandler(this, mSchoolyellow).setAngle(SpringingTouchPointHandler.ANGLE_LEFT));
@@ -114,7 +116,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.mipmap.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.mipmap.icon_m3);
         }
 
         mdrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -125,6 +127,9 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
 //        mIcon_image = (CircleImageView) headerView.findViewById(R.id.icon_image);
         mIcon_image = (SpringingImageView) headerView.findViewById(R.id.icon_image);
         mIcon_image.setIsCircleImage(true);
+        siv_sexs = (SpringingImageView) headerView.findViewById(R.id.siv_sexs);
+        siv_sexs.setIsCircleImage(true);
+
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
         mTv_state = (SpringingTextView) headerView.findViewById(R.id.tv_state);
 
@@ -171,6 +176,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mNewclassmate.setOnClickListener(this);
         mSchoolyellow.setOnClickListener(this);
         mSchoolnews.setOnClickListener(this);
+        mTv_state.setOnClickListener(this);
     }
 
     //加载菜单的方法
@@ -233,7 +239,14 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 } else {
                     gotoLoginActivity();
                 }
-
+                break;
+            //点击登录界面,弹出登录界面
+            case R.id.tv_state:
+                if (new IsLogin().isLogin()) {
+                    //如果已经登录则点击查看详细资料并进行修改
+                } else {
+                    gotoLoginActivity();
+                }
                 break;
             //点击登出界面
             case R.id.logout:
@@ -320,9 +333,11 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             Boolean sex = user.getSex();
             String username = user.getUsername();
             if (sex) {
-                mTv_state.setText(username + "  " + "男");
+                Glide.with(BeginPageActivity.this).load(R.mipmap.boy2).into(siv_sexs);
+                mTv_state.setText(username);
             } else {
-                mTv_state.setText(username + "  " + "女");
+                Glide.with(BeginPageActivity.this).load(R.mipmap.nv2).into(siv_sexs);
+                mTv_state.setText(username);
             }
             BmobFile bmobFile = user.getImage();
             if (bmobFile != null) {

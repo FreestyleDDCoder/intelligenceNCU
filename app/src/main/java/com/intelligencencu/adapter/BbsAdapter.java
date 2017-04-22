@@ -79,15 +79,21 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         final BBS bbs = mlist.get(position);
         //判断是否匿名消息
         if (bbs.isNoname()) {
-            Glide.with(mContext).load(R.mipmap.default_user_head_img).into(holder.circ_userimage);
             if (bbs.isSex()) {
-                holder.bbs_name.setText("一枚美男子");
+                Glide.with(mContext).load(R.mipmap.boy3).into(holder.circ_userimage);
+                holder.bbs_name.setText("美男子");
             } else {
-                holder.bbs_name.setText("一枚萌妹子");
+                Glide.with(mContext).load(R.mipmap.nv3).into(holder.circ_userimage);
+                holder.bbs_name.setText("萌妹子");
             }
         } else {
             User user = bbs.getUsername();
-            Glide.with(mContext).load(user.getImage().getFileUrl()).into(holder.circ_userimage);
+            BmobFile image = user.getImage();
+            if (image==null){
+                Glide.with(mContext).load(R.mipmap.default_user_head_img).into(holder.circ_userimage);
+            }else {
+                Glide.with(mContext).load(image.getFileUrl()).into(holder.circ_userimage);
+            }
             String username = user.getUsername();
             Log.d("username", username);
             holder.bbs_name.setText(username);
@@ -118,6 +124,8 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
                         builder.show();
                     }
                 });
+            }else {
+                holder.ib_delectbbs.setVisibility(View.INVISIBLE);
             }
         }
         holder.bbs_like.setOnClickListener(new View.OnClickListener() {

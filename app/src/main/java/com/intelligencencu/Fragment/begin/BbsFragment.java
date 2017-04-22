@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.intelligencencu.activity.BbsActivity;
+import com.intelligencencu.activity.LoginActivity;
 import com.intelligencencu.adapter.BbsAdapter;
 import com.intelligencencu.db.BBS;
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.ToastUntil;
 
 import java.util.ArrayList;
@@ -75,7 +77,6 @@ public class BbsFragment extends Fragment {
         }
         query.setLimit(count);
         query.include("username");// 希望在查询帖子信息的同时也把发布人的信息查询出来
-        //query.include("image");
         query.findObjects(new FindListener<BBS>() {
             @Override
             public void done(List<BBS> list, BmobException e) {
@@ -127,7 +128,12 @@ public class BbsFragment extends Fragment {
         float_bbs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoPublish();
+                if (new IsLogin().isLogin()) {
+                    gotoPublish();
+                }else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
