@@ -1,6 +1,8 @@
 package com.intelligencencu.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +14,16 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.intelligencencu.db.BBS;
+import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.ToastUntil;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -70,17 +76,19 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BBS bbs = mlist.get(position);
+        final BBS bbs = mlist.get(position);
         //判断是否匿名消息
         if (bbs.isNoname()) {
-            holder.circ_userimage.setBackgroundResource(R.mipmap.default_user_head_img);
-            if (bbs.isSex())
-                holder.bbs_name.setText("不一样的美男子");
-            holder.bbs_name.setText("不一样的美女子");
-
+            Glide.with(mContext).load(R.mipmap.default_user_head_img).into(holder.circ_userimage);
+            if (bbs.isSex()) {
+                holder.bbs_name.setText("一枚美男子");
+            } else {
+                holder.bbs_name.setText("一枚萌妹子");
+            }
         } else {
-            Glide.with(mContext).load(bbs.getImage().getFileUrl()).into(holder.circ_userimage);
-            String username = bbs.getUsername().getUsername();
+            User user = bbs.getUsername();
+            Glide.with(mContext).load(user.getImage().getFileUrl()).into(holder.circ_userimage);
+            String username = user.getUsername();
             Log.d("username", username);
             holder.bbs_name.setText(username);
         }
@@ -96,7 +104,18 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
                 holder.ib_delectbbs.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //点击删除按钮
+                        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                        builder.setTitle("注意！");
+                        builder.setMessage("删除后不可恢复，确认这么做吗？");
+                        builder.setNegativeButton("取消", null);
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //点击删除按钮
+                                deleBbs(bbs);
+                            }
+                        });
+                        builder.show();
                     }
                 });
             }
@@ -104,13 +123,24 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         holder.bbs_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ToastUntil.showShortToast(mContext, "喜欢功能待续...");
             }
         });
         holder.bbs_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ToastUntil.showShortToast(mContext, "评论功能待续...");
+            }
+        });
+    }
 
+    private void deleBbs(BBS bbs) {
+        BBS bbs1 = new BBS();
+        bbs1.setObjectId(bbs.getObjectId());
+        bbs1.delete(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                ToastUntil.showShortToast(mContext, e == null ? "删除成功，请下拉刷新数据！" : "删除失败！" + e);
             }
         });
     }

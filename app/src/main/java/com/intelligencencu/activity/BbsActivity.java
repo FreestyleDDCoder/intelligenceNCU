@@ -87,7 +87,6 @@ public class BbsActivity extends AppCompatActivity {
             bbs.setUsername(user);
             bbs.setDesc(desc);
             bbs.setNoname(checked);
-            bbs.setImage(user.getImage());
             bbs.setSex(user.getSex());
             bbs.save(new SaveListener<String>() {
                 @Override

@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.begin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -75,6 +75,7 @@ public class BbsFragment extends Fragment {
         }
         query.setLimit(count);
         query.include("username");// 希望在查询帖子信息的同时也把发布人的信息查询出来
+        //query.include("image");
         query.findObjects(new FindListener<BBS>() {
             @Override
             public void done(List<BBS> list, BmobException e) {

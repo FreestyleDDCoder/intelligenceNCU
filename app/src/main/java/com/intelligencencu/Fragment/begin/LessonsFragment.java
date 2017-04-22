@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.begin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,14 +11,14 @@ import com.intelligencencu.intelligencencu.R;
 
 /**
  * Created by liangzhan on 17-4-18.
- * 闲置集Fragment
+ * 课表Fragment
  */
 
-public class SellFragment extends Fragment {
+public class LessonsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sell, container, false);
+        View view = inflater.inflate(R.layout.fragment_lessons, container, false);
         return view;
     }
 }

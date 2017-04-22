@@ -28,11 +28,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.intelligencencu.Fragment.BeginPageFragment;
+import com.bumptech.glide.Glide;
+import com.intelligencencu.Fragment.begin.BeginPageFragment;
 import com.intelligencencu.Fragment.Classmate.NewSchoolMateFragment;
-import com.intelligencencu.Fragment.SchoolMessageFragment;
+import com.intelligencencu.Fragment.begin.SchoolMessageFragment;
 import com.intelligencencu.Fragment.News.SchoolNewsFragment;
-import com.intelligencencu.Fragment.SchoolSceneryFragment;
+import com.intelligencencu.Fragment.begin.SchoolSceneryFragment;
 import com.intelligencencu.Fragment.Schoollife.SchoolYellowFragment;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
@@ -348,11 +349,13 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                     mIcon_image.setImageBitmap(bitmap);
                 }
             } else {
-                mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_user_head_img));
+                Glide.with(BeginPageActivity.this).load(R.mipmap.default_user_head_img).into(mIcon_image);
+               // mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_user_head_img));
             }
         } else {
             mTv_state.setText("点击登录");
-            mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_avatar_man));
+            Glide.with(BeginPageActivity.this).load(R.mipmap.default_avatar_man).into(mIcon_image);
+            //mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_avatar_man));
         }
     }
 

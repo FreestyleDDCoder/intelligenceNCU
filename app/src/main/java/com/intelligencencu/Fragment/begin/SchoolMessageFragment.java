@@ -1,4 +1,4 @@
-package com.intelligencencu.Fragment;
+package com.intelligencencu.Fragment.begin;
 
 import android.os.Bundle;
 import android.os.Handler;
