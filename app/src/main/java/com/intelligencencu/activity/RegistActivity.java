@@ -79,6 +79,8 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
     String dateTime;
     private String uri;
     private Bitmap photo;
+    private SpringingTextView stv_setimage;
+    private String emailHint;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,7 +114,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         mSll_mainContainer.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mSll_mainContainer).setOnlyOnChildren(true, mSedt_account, mSedt_password));
         mSimg_avatarMan.getSpringingHandlerController().addSpringingHandler(new SpringingTouchScaleHandler(this, mSimg_avatarMan));
         mStv_regist.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, mStv_regist));
-
+        stv_setimage.getSpringingHandlerController().addSpringingHandler(new SpringTouchRippleHandler(this, stv_setimage));
     }
 
     private void initUI() {
@@ -127,6 +129,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
         mBoys = (RadioButton) findViewById(R.id.boys);
         mGirls = (RadioButton) findViewById(R.id.girls);
         mStv_regist = (SpringingTextView) findViewById(R.id.stv_regist);
+        stv_setimage = (SpringingTextView) findViewById(R.id.stv_setimage);
     }
 
     @Override
@@ -175,7 +178,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 boys = false;
                 break;
             case R.id.stv_regist:
-                String emailHint = mSedt_emailHint.getText().toString();
+                emailHint = mSedt_emailHint.getText().toString();
                 String account = mSedt_account.getText().toString();
                 String password = mSedt_password.getText().toString();
                 if (TextUtils.isEmpty(emailHint)) {
@@ -186,7 +189,6 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                     ToastUntil.showShortToast(RegistActivity.this, "密码不能为空！");
                 } else {
                     regist(emailHint, account, password);
-                    checkEmail(emailHint);
                 }
                 break;
         }
@@ -230,11 +232,10 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    ToastUntil.showShortToast(RegistActivity.this, "请求验证邮件成功，请到" + email + "邮箱中进行激活,方便以后重置密码。");
+                    ToastUntil.showLongToast(RegistActivity.this, "请求验证邮件成功，请到" + email + "邮箱中进行激活,方便以后重置密码。");
                     finish();
                 } else {
                     ToastUntil.showShortToast(RegistActivity.this, "" + e.getMessage());
-                    finish();
                 }
             }
         });
@@ -254,10 +255,10 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
-                    //注册成功
-                    ToastUntil.showShortToast(RegistActivity.this, "注册成功，你现在可以使用该账号了！");
                     uri = saveToSdCard(photo);
                     updateIcon(uri);
+                    //注册成功
+                    ToastUntil.showShortToast(RegistActivity.this, "注册成功，你现在可以使用该账号了！");
                 } else {
                     ToastUntil.showShortToast(RegistActivity.this, "用户名或电子邮箱已经被另一个用户注册。");
                 }
@@ -348,6 +349,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                             @Override
                             public void done(BmobException e) {
                                 Log.d("", "更新成功");
+                                checkEmail(emailHint);
                             }
                         });
                     } else {

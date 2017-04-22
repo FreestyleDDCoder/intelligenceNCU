@@ -128,7 +128,6 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         mIcon_image = (SpringingImageView) headerView.findViewById(R.id.icon_image);
         mIcon_image.setIsCircleImage(true);
         siv_sexs = (SpringingImageView) headerView.findViewById(R.id.siv_sexs);
-        siv_sexs.setIsCircleImage(true);
 
         mLogout = (SpringingImageView) headerView.findViewById(R.id.logout);
         mTv_state = (SpringingTextView) headerView.findViewById(R.id.tv_state);
@@ -330,6 +329,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
     private void initPersonalInfo() {
         User user = BmobUser.getCurrentUser(User.class);
         if (user != null) {
+            siv_sexs.setVisibility(View.VISIBLE);
             Boolean sex = user.getSex();
             String username = user.getUsername();
             if (sex) {
@@ -369,6 +369,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
             }
         } else {
             mTv_state.setText("点击登录");
+            siv_sexs.setVisibility(View.GONE);
             Glide.with(BeginPageActivity.this).load(R.mipmap.default_avatar_man).into(mIcon_image);
             //mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_avatar_man));
         }
