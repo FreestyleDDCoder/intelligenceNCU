@@ -45,7 +45,8 @@
                     android:id="@+id/siv_begin"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/beginpage1"
+                    android:clickable="true"
+                    android:background="@drawable/beginpage_selector"
                     />
             </LinearLayout>
 
@@ -60,7 +61,8 @@
                     android:id="@+id/newclassmate"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/student1" />
+                    android:clickable="true"
+                    android:background="@drawable/student_selector" />
             </LinearLayout>
 
             <LinearLayout
@@ -74,7 +76,8 @@
                     android:id="@+id/schoolyellow"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/life1"
+                    android:clickable="true"
+                    android:background="@drawable/life_selector"
                     />
             </LinearLayout>
 
@@ -89,7 +92,8 @@
                     android:id="@+id/schoolnews"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@mipmap/news1"
+                    android:clickable="true"
+                    android:background="@drawable/news_selector"
                     />
             </LinearLayout>
         </LinearLayout>

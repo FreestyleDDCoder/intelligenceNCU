@@ -46,7 +46,7 @@ public class PanoApplication extends Application {
             if (iError != 0) {
                 // 授权Key错误：
                 Toast.makeText(PanoApplication.getInstance().getApplicationContext(),
-                        "请在AndoridManifest.xml中输入正确的授权Key,并检查您的网络连接是否正常！error: " + iError, Toast.LENGTH_LONG).show();
+                        "请检查您的网络连接是否正常！error: " + iError, Toast.LENGTH_LONG).show();
             } else {
                 Log.d("key","key 认证成功！");
             }
