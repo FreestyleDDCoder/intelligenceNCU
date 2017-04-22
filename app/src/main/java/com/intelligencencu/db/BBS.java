@@ -17,8 +17,17 @@ public class BBS extends BmobObject {
     private BmobFile image;//帖子图片
     private String desc;
     private boolean noname;
+    private boolean sex;
     private int review;
-    private BmobRelation likes;//多对多关系：用于存储喜欢该帖子的所有用户
+    private int likes;//多对多关系：用于存储喜欢该帖子的所有用户
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public void setSex(boolean sex) {
+        this.sex = sex;
+    }
 
     public User getUsername() {
         return username;
@@ -60,11 +69,11 @@ public class BBS extends BmobObject {
         this.review = review;
     }
 
-    public BmobRelation getLikes() {
+    public int getLikes() {
         return likes;
     }
 
-    public void setLikes(BmobRelation likes) {
+    public void setLikes(int likes) {
         this.likes = likes;
     }
 }
