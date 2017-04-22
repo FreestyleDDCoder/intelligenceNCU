@@ -2,6 +2,7 @@ package com.intelligencencu.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.intelligencencu.intelligencencu.R;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,17 +77,29 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
             if (bbs.isSex())
                 holder.bbs_name.setText("不一样的美男子");
             holder.bbs_name.setText("不一样的美女子");
-            holder.bbs_time.setText(bbs.getUpdatedAt());
-            holder.tv_bbsdesc.setText(bbs.getDesc());
-            holder.tv_likenumber.setText(bbs.getLikes());
-            holder.tv_commentnumber.setText(bbs.getReview());
+
         } else {
             Glide.with(mContext).load(bbs.getImage().getFileUrl()).into(holder.circ_userimage);
-            holder.bbs_name.setText(bbs.getUsername().getUsername());
-            holder.bbs_time.setText(bbs.getUpdatedAt());
-            holder.tv_bbsdesc.setText(bbs.getDesc());
-            holder.tv_likenumber.setText(bbs.getLikes());
-            holder.tv_commentnumber.setText(bbs.getReview());
+            String username = bbs.getUsername().getUsername();
+            Log.d("username", username);
+            holder.bbs_name.setText(username);
+        }
+        holder.bbs_time.setText(bbs.getUpdatedAt());
+        holder.tv_bbsdesc.setText(bbs.getDesc());
+        holder.tv_likenumber.setText("" + bbs.getLikes());
+        holder.tv_commentnumber.setText("" + bbs.getReview());
+        BmobUser user = BmobUser.getCurrentUser();
+        if (user != null) {
+            if (user.getUsername().equals(bbs.getUsername().getUsername())) {
+                Log.d("acl", "到了这里！");
+                holder.ib_delectbbs.setVisibility(View.VISIBLE);
+                holder.ib_delectbbs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //点击删除按钮
+                    }
+                });
+            }
         }
         holder.bbs_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,12 +107,12 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
 
             }
         });
-      holder.bbs_comment.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
+        holder.bbs_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-          }
-      });
+            }
+        });
     }
 
     @Override
