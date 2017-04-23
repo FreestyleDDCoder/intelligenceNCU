@@ -1,5 +1,7 @@
 package com.intelligencencu.db;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -9,7 +11,7 @@ import cn.bmob.v3.datatype.BmobRelation;
  * 这是论坛主表
  */
 
-public class BBS extends BmobObject {
+public class BBS extends BmobObject implements Serializable {
     /**
      * 这个表要包含用户名，头像，发表的内容，匿名条件，评论条数，点赞数，ACL权限等
      */

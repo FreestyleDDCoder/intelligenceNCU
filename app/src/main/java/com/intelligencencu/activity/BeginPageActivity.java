@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -365,7 +366,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 }
             } else {
                 Glide.with(BeginPageActivity.this).load(R.mipmap.default_user_head_img).into(mIcon_image);
-               // mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_user_head_img));
+                // mIcon_image.setImageDrawable(getResources().getDrawable(R.mipmap.default_user_head_img));
             }
         } else {
             mTv_state.setText("点击登录");
@@ -455,5 +456,17 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
 
     public interface MyOnTouchListener {
         boolean onTouch(MotionEvent ev);
+    }
+
+    //当程序要退出时弹框提示
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        Snackbar.make(mNewclassmate, "确定退出？", Snackbar.LENGTH_SHORT).setAction("取消", new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 }

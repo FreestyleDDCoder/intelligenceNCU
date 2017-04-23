@@ -72,6 +72,8 @@
             android:label="失物招领"/>
         <activity android:name="com.intelligencencu.activity.BbsActivity"
             android:label="心情地"/>
+        <activity android:name="com.intelligencencu.activity.CommentsActivity"
+            android:label="评论页面"/>
         <!--地图-->
         <service
             android:name="com.baidu.location.f"

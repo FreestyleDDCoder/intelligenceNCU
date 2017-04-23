@@ -2,6 +2,8 @@ package com.intelligencencu.adapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.intelligencencu.activity.CommentsActivity;
 import com.intelligencencu.db.BBS;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
@@ -46,6 +49,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         ImageButton ib_delectbbs;
         ImageView bbs_like;
         ImageView bbs_comment;
+        ImageView iv_sex;
 
         public ViewHolder(View view) {
             super(view);
@@ -58,6 +62,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
             ib_delectbbs = (ImageButton) view.findViewById(R.id.ib_delectbbs);
             bbs_like = (ImageView) view.findViewById(R.id.bbs_like);
             bbs_comment = (ImageView) view.findViewById(R.id.bbs_comment);
+            iv_sex = (ImageView) view.findViewById(R.id.iv_sex);
         }
     }
 
@@ -81,17 +86,24 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         if (bbs.isNoname()) {
             if (bbs.isSex()) {
                 Glide.with(mContext).load(R.mipmap.boy3).into(holder.circ_userimage);
+                Glide.with(mContext).load(R.mipmap.boy2).into(holder.iv_sex);
                 holder.bbs_name.setText("美男子");
             } else {
                 Glide.with(mContext).load(R.mipmap.nv3).into(holder.circ_userimage);
+                Glide.with(mContext).load(R.mipmap.nv2).into(holder.iv_sex);
                 holder.bbs_name.setText("萌妹子");
             }
         } else {
+            if (bbs.isSex()) {
+                Glide.with(mContext).load(R.mipmap.boy2).into(holder.iv_sex);
+            } else {
+                Glide.with(mContext).load(R.mipmap.nv2).into(holder.iv_sex);
+            }
             User user = bbs.getUsername();
             BmobFile image = user.getImage();
-            if (image==null){
+            if (image == null) {
                 Glide.with(mContext).load(R.mipmap.default_user_head_img).into(holder.circ_userimage);
-            }else {
+            } else {
                 Glide.with(mContext).load(image.getFileUrl()).into(holder.circ_userimage);
             }
             String username = user.getUsername();
@@ -124,7 +136,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
                         builder.show();
                     }
                 });
-            }else {
+            } else {
                 holder.ib_delectbbs.setVisibility(View.INVISIBLE);
             }
         }
@@ -137,9 +149,26 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         holder.bbs_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUntil.showShortToast(mContext, "评论功能待续...");
+                gotoComment(bbs);
             }
         });
+        //点击头像可以查看发帖人的详细信息
+        holder.circ_userimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    //进入评论界面
+    private void gotoComment(BBS bbs) {
+        Intent intent = new Intent(mContext, CommentsActivity.class);
+        //传递对象需要实现序列化接口
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bbs", bbs);
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
     }
 
     private void deleBbs(BBS bbs) {
