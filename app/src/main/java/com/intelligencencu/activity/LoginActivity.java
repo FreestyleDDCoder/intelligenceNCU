@@ -1,6 +1,5 @@
 package com.intelligencencu.activity;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
-
 import android.widget.TextView;
 
 import com.intelligencencu.db.User;
@@ -21,7 +19,6 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
 import dym.unique.com.springinglayoutlibrary.handler.SpringTouchRippleHandler;
-
 import dym.unique.com.springinglayoutlibrary.handler.SpringingAlphaShowHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingNotificationRotateHandler;
 import dym.unique.com.springinglayoutlibrary.handler.SpringingTouchDragHandler;

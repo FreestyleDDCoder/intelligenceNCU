@@ -1,15 +1,10 @@
 package com.intelligencencu.activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.baidu.lbsapi.model.BaiduPanoData;
 import com.baidu.lbsapi.panoramaview.PanoramaRequest;
@@ -35,8 +29,6 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.intelligencencu.intelligencencu.R;
-
-import java.util.ArrayList;
 
 import dym.unique.com.springinglayoutlibrary.view.SpringingImageView;
 import dym.unique.com.springinglayoutlibrary.view.SpringingTextView;
