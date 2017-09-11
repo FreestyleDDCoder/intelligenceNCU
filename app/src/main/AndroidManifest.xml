@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.intelligencencu.intelligencencu"
     android:versionCode="1"
-    android:versionName="4.1.3">
+    android:versionName="1.0">
 
     <supports-screens
         android:anyDensity="true"
@@ -38,7 +38,7 @@
         android:name="com.intelligencencu.PanoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/icon_app"
-        android:label="智慧南大"
+        android:label="南大助手"
         android:roundIcon="@mipmap/icon_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -56,7 +56,7 @@
         </activity>
         <activity
             android:name="com.intelligencencu.activity.BeginPageActivity"
-            android:label="智慧南大" />
+            android:label="南大助手" />
         <activity android:name="com.intelligencencu.activity.LoginActivity" />
         <activity android:name="com.intelligencencu.activity.RegistActivity" />
         <activity

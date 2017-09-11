@@ -1,5 +1,6 @@
 package com.intelligencencu.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -122,7 +123,8 @@ public class LostFoundActivity extends AppCompatActivity {
                 public void done(String s, BmobException e) {
                     if (e == null) {
                         //信息添加成功
-                        ToastUntil.showShortToast(LostFoundActivity.this, s.equals("1") ? "添加丢失成功,请下拉刷新数据！" : "添加招领成功，请下拉刷新数据！");
+                        ToastUntil.showShortToast(LostFoundActivity.this,"添加丢失成功!");
+                        setResult(RESULT_OK);
                         finish();
                     } else {
                         ToastUntil.showShortToast(LostFoundActivity.this, "添加失败" + e);

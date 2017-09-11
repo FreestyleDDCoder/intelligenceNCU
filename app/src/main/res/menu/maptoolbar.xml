@@ -17,6 +17,6 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/allviewmap"
-        android:title="附近街景"
+        android:title="南大街景"
         app:showAsAction="never"/>
 </menu>

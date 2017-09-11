@@ -11,6 +11,7 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.intelligencencu.intelligencencu.R;
+import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.StreamUtils;
+import com.intelligencencu.utils.ToastUntil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
@@ -36,6 +39,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 
 /**
  * 这是App的闪屏页面
@@ -126,9 +133,16 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
 
+    //进入开始页面代码块
     private void beginPage() {
-        Intent intent = new Intent(this, BeginPageActivity.class);
-        startActivity(intent);
+        if (new IsLogin().isLogin()) {
+            Intent intent = new Intent(this, BeginPageActivity.class);
+            startActivity(intent);
+        } else {
+            ToastUntil.showShortToast(this, "请先登录再使用本功能！");
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
         //同时把当前Activity销毁掉，避免返回这个界面
         finish();
     }
@@ -174,86 +188,102 @@ public class SplashActivity extends AppCompatActivity {
         // 当网速太快时，闪屏页还没打开就已经跳转了
         final long startTime = System.currentTimeMillis();
         // 模拟器加载本机地址用10.0.2.2
-        // 耗时应该用子线程去实现,进行异步加载
-        new Thread() {
-            private HttpURLConnection conn;
-
+        //加载更新的配置文件(bomb后端云)
+        BmobQuery<com.intelligencencu.db.File> query = new BmobQuery<>();
+        query.getObject("cWS5d55d", new QueryListener<com.intelligencencu.db.File>() {
             @Override
-            public void run() {
-                // obtain:获得的意思
-                // 从全局池中返回一个新的消息实例。使我们能够避免在许多情况下分配新的对象。
+            public void done(com.intelligencencu.db.File file, BmobException e) {
+                if (e == null) {
+                    BmobFile bmobFile = file.getJsonFile();
+                    Log.d("更新文件", "查询成功！" + bmobFile.getFilename());
+                    final String fileUrl = bmobFile.getFileUrl();
+                    Log.d("更新文件", "查询成功！" + fileUrl);
+                    // 耗时应该用子线程去实现,进行异步加载
+                    new Thread() {
+                        private HttpURLConnection conn;
 
-                Message mess = Message.obtain();
+                        @Override
+                        public void run() {
+                            // obtain:获得的意思
+                            // 从全局池中返回一个新的消息实例。使我们能够避免在许多情况下分配新的对象。
 
-                try {
-                    URL url = new URL("http://123.207.29.48/update/intelligencencuUpdate.json");
-                    conn = (HttpURLConnection) url.openConnection();
-                    // 设置GET请求方法
-                    conn.setRequestMethod("GET");
-                    conn.setConnectTimeout(5000);// 连接超时
-                    conn.setReadTimeout(5000);// 读取超时
-                    conn.connect();// 连接服务器
-                    if (conn.getResponseCode() == 200) {
-                        InputStream inputStream = conn.getInputStream();
-                        // 写个工具类用来处理io流
-                        String result = StreamUtils.readFromStream(inputStream);
-                        System.out.println("网络结果是：" + result);// 测试是否拿到json数据
-                        // 解析json数据
-                        JSONObject jsonObject = new JSONObject(result);
-                        mversionName = jsonObject.getString("versionName");
-                        mversioncode = jsonObject.getInt("versionCode");
-                        mdescription = jsonObject.getString("description");
-                        mdownloadUrl = jsonObject.getString("downloadUrl");
-                        // 测试是否解析成功
-                        System.out.println("版本描述：" + mdescription);
+                            Message mess = Message.obtain();
+                            Log.d("更新文件", "到了url！" + fileUrl);
+                            try {
+                                URL url = new URL(fileUrl);
+                                conn = (HttpURLConnection) url.openConnection();
+                                // 设置GET请求方法
+                                conn.setRequestMethod("GET");
+                                conn.setConnectTimeout(5000);// 连接超时
+                                conn.setReadTimeout(5000);// 读取超时
+                                conn.connect();// 连接服务器
+                                if (conn.getResponseCode() == 200) {
+                                    InputStream inputStream = conn.getInputStream();
+                                    // 写个工具类用来处理io流
+                                    String result = StreamUtils.readFromStream(inputStream);
+                                    System.out.println("网络结果是：" + result);// 测试是否拿到json数据
+                                    // 解析json数据
+                                    JSONObject jsonObject = new JSONObject(result);
+                                    mversionName = jsonObject.getString("versionName");
+                                    mversioncode = jsonObject.getInt("versionCode");
+                                    mdescription = jsonObject.getString("description");
+                                    mdownloadUrl = jsonObject.getString("downloadUrl");
+                                    // 测试是否解析成功
+                                    System.out.println("版本描述：" + mdescription);
 
-                        // 将本地和服务器的versionCode进行比较
-                        if (mversioncode > getVersionCode()) {
-                            // 子线程没有刷新UI的权限
-                            mess.what = CODE_UPDATE_DIALOG;
-                        } else {// 没有版本更新
-                            mess.what = CODE_ENTER_HOME;
-                        }
-                    }
+                                    // 将本地和服务器的versionCode进行比较
+                                    if (mversioncode > getVersionCode()) {
+                                        // 子线程没有刷新UI的权限
+                                        mess.what = CODE_UPDATE_DIALOG;
+                                    } else {// 没有版本更新
+                                        mess.what = CODE_ENTER_HOME;
+                                    }
+                                }
 
-                } catch (MalformedURLException e) {
-                    // url错误
-                    mess.what = CODE_URL_ERROR;
+                            } catch (MalformedURLException e) {
+                                // url错误
+                                mess.what = CODE_URL_ERROR;
 
-                } catch (IOException e) {
-                    // 网络错误
-                    mess.what = CODE_IO_ERROR;
+                            } catch (IOException e) {
+                                // 网络错误
+                                mess.what = CODE_IO_ERROR;
 
-                } catch (JSONException e) {
-                    // json解析失败
-                    mess.what = CODE_JSON_ERROR;
-                    e.printStackTrace();
-                } finally {
-                    long endTime = System.currentTimeMillis();
-                    long time = startTime - endTime;
-                    if (time > 2000) {
-                        mhandler.sendMessage(mess);
-                        // 断开网络连接
-                        conn.disconnect();
-                    } else {
-                        try {
-                            Thread.sleep(2000 - time);
-                            mhandler.sendMessage(mess);
-                            // 断开网络连接
-                            if (conn != null) {
-                                conn.disconnect();
+                            } catch (JSONException e) {
+                                // json解析失败
+                                mess.what = CODE_JSON_ERROR;
+                                e.printStackTrace();
+                            } finally {
+                                long endTime = System.currentTimeMillis();
+                                long time = startTime - endTime;
+                                if (time > 2000) {
+                                    mhandler.sendMessage(mess);
+                                    // 断开网络连接
+                                    conn.disconnect();
+                                } else {
+                                    try {
+                                        Thread.sleep(2000 - time);
+                                        mhandler.sendMessage(mess);
+                                        // 断开网络连接
+                                        if (conn != null) {
+                                            conn.disconnect();
+                                        }
+
+                                    } catch (InterruptedException e) {
+                                        // TODO Auto-generated catch block
+                                        e.printStackTrace();
+                                    }
+                                }
+
                             }
-
-                        } catch (InterruptedException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
                         }
-                    }
 
+                    }.start();
+                } else {
+                    //查询失败
+                    Log.d("查询更新文件失败",e.toString());
                 }
             }
-
-        }.start();
+        });
     }
 
     //获取当前安装的版本号

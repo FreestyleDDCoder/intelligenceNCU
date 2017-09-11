@@ -134,6 +134,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (user != null) {
                     //登录成功
                     ToastUntil.showShortToast(LoginActivity.this, "登录成功！");
+                    //启动开始页面然后退出当前登录界面
+                    Intent intent = new Intent(LoginActivity.this, BeginPageActivity.class);
+                    startActivity(intent);
                     finish();
                 } else {
                     ToastUntil.showShortToast(LoginActivity.this,"账号或密码有误！请重试！");
@@ -145,6 +148,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void gotoRegister() {
         Intent intent = new Intent(this, RegistActivity.class);
         startActivity(intent);
-        finish();
     }
 }

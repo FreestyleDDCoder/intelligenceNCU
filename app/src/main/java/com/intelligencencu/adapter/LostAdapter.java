@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.intelligencencu.db.BBS;
 import com.intelligencencu.db.Lost;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.ToastUntil;
@@ -64,7 +65,7 @@ public class LostAdapter extends RecyclerView.Adapter<LostAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final Lost lost = mLost.get(position);
         if (lost.getFlag().equals("1")) {
             holder.tv_lostfoundtitle.setText("(丢失)" + lost.getTitle());
@@ -77,13 +78,13 @@ public class LostAdapter extends RecyclerView.Adapter<LostAdapter.ViewHolder> {
         holder.ll_lostfound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDescDialog(lost);
+                showDescDialog(lost, position);
             }
         });
         Log.d("lostAdapter", lost.getTitle() + lost.getDescribe());
     }
 
-    private void showDescDialog(final Lost lost) {
+    private void showDescDialog(final Lost lost, final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mcontext);
         if (lost.getFlag().equals("1")) {
             builder.setTitle("(丢失)" + lost.getTitle());
@@ -99,7 +100,7 @@ public class LostAdapter extends RecyclerView.Adapter<LostAdapter.ViewHolder> {
                 builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        delLostFound(lost);
+                        delLostFound(lost, position);
                     }
                 });
             }
@@ -108,17 +109,23 @@ public class LostAdapter extends RecyclerView.Adapter<LostAdapter.ViewHolder> {
         builder.show();
     }
 
-    private void delLostFound(final Lost lost) {
+    private void delLostFound(final Lost lost, final int position) {
         Lost lost1 = new Lost();
         lost1.setObjectId(lost.getObjectId());
         lost1.delete(new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                ToastUntil.showShortToast(mcontext, e == null ? "删除成功，请下拉刷新数据！" : "删除失败！" + e);
+                if (e == null) {
+                    ToastUntil.showShortToast(mcontext, "删除成功，请下拉刷新数据！");
+                    //这里把数据从list中除去，然后刷新适配器，避免手动刷新（提升用户体验）
+                    //mLost.remove(position);
+                } else {
+                    ToastUntil.showShortToast(mcontext, "删除失败！" + e);
+                    Log.d("删除失败",e+"");
+                }
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

@@ -53,8 +53,8 @@ public class MapActivity extends AppCompatActivity {
     private MapView mMv_baiduview;
     private BaiduMap baiduMap;
     private boolean isFirstLocate = true;
-    private double latitude = 28.65456325298023;
-    private double longitude = 115.80237329006195;
+    private double latitude = 28.661174;
+    private double longitude = 115.809443;
     private BDLocation location;
     private SpringingImageView pic;
     private View view;
@@ -175,8 +175,13 @@ public class MapActivity extends AppCompatActivity {
             case R.id.satellitemap:
                 baiduMap.setMapType(BaiduMap.MAP_TYPE_SATELLITE);
                 break;
+            //南大街景
             case R.id.allviewmap:
-                gotoPanoramaActivity();
+                //坐标信息115.809636,28.664933（人文楼）/115.809443,28.661174(大门)
+                Intent intent = new Intent(MapActivity.this, PanoramaActivity.class);
+                intent.putExtra("latitude", 28.661174);
+                intent.putExtra("longitude", 115.809443);
+                startActivity(intent);
                 break;
             case R.id.mylocation:
                 if (location != null) {

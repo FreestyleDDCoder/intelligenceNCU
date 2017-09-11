@@ -157,7 +157,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                         mNewclassmate.setSelected(false);
                         mSchoolyellow.setSelected(false);
                         mSchoolnews.setSelected(false);
-                        mToolbar.setTitle("智慧南大");
+                        mToolbar.setTitle("南大助手");
                         replaceFragment(new BeginPageFragment());
                         break;
                     //点击设置
@@ -258,7 +258,7 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
                 mNewclassmate.setSelected(false);
                 mSchoolyellow.setSelected(false);
                 mSchoolnews.setSelected(false);
-                mToolbar.setTitle("智慧南大");
+                mToolbar.setTitle("南大助手");
                 replaceFragment(new BeginPageFragment());
                 break;
             case R.id.newclassmate:
@@ -416,17 +416,15 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0) {
-                    Boolean isgotomap = true;
                     for (int result : grantResults) {
                         //当所有权限都开启后才进行地图活动
                         if (result != PackageManager.PERMISSION_GRANTED) {
                             Toast.makeText(BeginPageActivity.this, "必须同意所有权限才能使用本功能", Toast.LENGTH_SHORT).show();
-                            isgotomap = false;
                             return;
+                        } else {
+                            gotoBaiduMap();
                         }
                     }
-                    if (isgotomap)
-                        gotoBaiduMap();
                 } else {
                     Toast.makeText(BeginPageActivity.this, "发生未知错误", Toast.LENGTH_SHORT).show();
                 }
@@ -460,13 +458,23 @@ public class BeginPageActivity extends AppCompatActivity implements View.OnClick
 
     //当程序要退出时弹框提示
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        Snackbar.make(mNewclassmate, "确定退出？", Snackbar.LENGTH_SHORT).setAction("取消", new View.OnClickListener() {
+    public void onBackPressed() {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(BeginPageActivity.this);
+//        builder.setTitle("退出程序");
+//        builder.setMessage("确认退出吗？");
+//        builder.setNegativeButton("取消", null);
+//        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 //            @Override
-//            public void onClick(View v) {
-//
+//            public void onClick(DialogInterface dialog, int which) {
+//                finish();
 //            }
 //        });
+        //退出提示
+        Snackbar.make(mNewclassmate.getRootView(), "确定退出？", Snackbar.LENGTH_SHORT).setAction("确定", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        }).show();
     }
 }

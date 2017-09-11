@@ -92,7 +92,8 @@ public class BbsActivity extends AppCompatActivity {
                 @Override
                 public void done(String s, BmobException e) {
                     if (e == null) {
-                        ToastUntil.showShortToast(BbsActivity.this, "发表成功，请下拉刷新！");
+                        ToastUntil.showShortToast(BbsActivity.this, "发表成功!");
+                        setResult(RESULT_OK);
                         finish();
                     } else {
                         ToastUntil.showShortToast(BbsActivity.this, "发表失败，请重试！");

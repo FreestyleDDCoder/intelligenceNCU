@@ -81,6 +81,7 @@ public class CommentsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     private void postDetails() {

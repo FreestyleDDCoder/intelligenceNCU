@@ -80,7 +80,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         final BBS bbs = mlist.get(position);
         //判断是否匿名消息
         if (bbs.isNoname()) {
@@ -101,6 +101,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
             }
             User user = bbs.getUsername();
             BmobFile image = user.getImage();
+            //Log.d("image信息",image.toString());
             if (image == null) {
                 Glide.with(mContext).load(R.mipmap.default_user_head_img).into(holder.circ_userimage);
             } else {
@@ -140,10 +141,34 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
                 holder.ib_delectbbs.setVisibility(View.INVISIBLE);
             }
         }
+
+        final String objectId = bbs.getObjectId();
+        Log.d("objectId", objectId);
         holder.bbs_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUntil.showShortToast(mContext, "喜欢功能待续...");
+                //ToastUntil.showShortToast(mContext, "喜欢功能待续...");
+                //更新喜欢帖子信息
+                bbs.setLikes(bbs.getLikes() + 1);
+                bbs.update(objectId, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if (e == null) {
+                            Log.d("喜欢更新成功：", null);
+                            notifyItemChanged(position);
+                        } else {
+                            Log.d("喜欢更新失败：", e.toString());
+                        }
+                    }
+                });
+            }
+        });
+
+        //当点击文章内容或者点击评论图标时进入发帖详细页面
+        holder.tv_bbsdesc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoComment(bbs);
             }
         });
         holder.bbs_comment.setOnClickListener(new View.OnClickListener() {

@@ -2,8 +2,6 @@ package com.intelligencencu.Fragment.Schoollife;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -23,17 +21,14 @@ import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.IsLogin;
 import com.intelligencencu.utils.ToastUntil;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by liangzhan on 17-3-28.
@@ -50,6 +45,9 @@ public class LostFoundFragment extends Fragment {
     private static final int STATE_REFRESH = 0;// 下拉刷新
     private static final int STATE_MORE = 1;// 加载更多
 
+    private static final int LOSTREQ = 0;// 请求码
+
+    private boolean isFirstLastPosition = true;
     private int count = 20;        // 每页的数据是20条
     private int curPage = 0;        // 当前页的编号，从0开始
     private LostAdapter adapter;
@@ -81,6 +79,7 @@ public class LostFoundFragment extends Fragment {
         //lostAdapter.notifyDataSetChanged();
         swip_lostfound.setRefreshing(false);
     }
+
     //查询数据的方法
     private void getList(int page, final int actionType) {
         BmobQuery<Lost> query = new BmobQuery<>();
@@ -113,6 +112,7 @@ public class LostFoundFragment extends Fragment {
                         //mLostlist = list;
                         // 这里在每次加载完数据后，将当前页码+1，这样在上拉刷新的onPullUpToRefresh方法中就不需要操作curPage了
                         curPage++;
+                        isFirstLastPosition=true;
                     } else if (actionType == STATE_MORE) {
                         ToastUntil.showShortToast(getActivity(), "没有更多数据了");
                     } else if (actionType == STATE_REFRESH) {
@@ -159,8 +159,11 @@ public class LostFoundFragment extends Fragment {
                     //获取最后一个可见view的位置
                     int lastItemPosition = linearManager.findLastVisibleItemPosition();
                     if (lastItemPosition == count * curPage - 1) {
-                        getList(curPage, STATE_MORE);
-                        ToastUntil.showShortToast(getActivity(),"正在加载更多...");
+                        if (isFirstLastPosition){
+                            isFirstLastPosition=false;
+                            ToastUntil.showShortToast(getActivity(), "正在加载更多...");
+                            getList(curPage, STATE_MORE);
+                        }
                     }
                     Log.d("sItemPosition", "" + "" + lastItemPosition);
                 }
@@ -170,7 +173,8 @@ public class LostFoundFragment extends Fragment {
 
     private void gotoLostFound() {
         Intent intent = new IsLogin().isLogin() ? new Intent(getActivity(), LostFoundActivity.class) : new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
+        startActivityForResult(intent, LOSTREQ);
     }
 
     private void initView(View view) {
@@ -182,5 +186,15 @@ public class LostFoundFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         rlv_lostfound.setLayoutManager(layoutManager);
         mLostlist = new ArrayList<>();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_OK:
+                getList(0, STATE_REFRESH);
+                break;
+        }
     }
 }

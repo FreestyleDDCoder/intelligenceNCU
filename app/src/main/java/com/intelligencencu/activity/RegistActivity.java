@@ -177,6 +177,7 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 boys = false;
                 break;
+            //点击注册按钮
             case R.id.stv_regist:
                 emailHint = mSedt_emailHint.getText().toString();
                 String account = mSedt_account.getText().toString();
@@ -232,7 +233,8 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void done(BmobException e) {
                 if (e == null) {
-                    ToastUntil.showLongToast(RegistActivity.this, "请求验证邮件成功，请到" + email + "邮箱中进行激活,方便以后重置密码。");
+                    ToastUntil.showLongToast(RegistActivity.this, "验证邮件成功，请到" + email + "邮箱中进行激活,方便以后重置密码。");
+                    ToastUntil.showShortToast(RegistActivity.this, "注册成功，你现在可以使用该账号了！");
                     finish();
                 } else {
                     ToastUntil.showShortToast(RegistActivity.this, "" + e.getMessage());
@@ -255,10 +257,9 @@ public class RegistActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void done(User user, BmobException e) {
                 if (e == null) {
+                    //注册成功，然后验证和上传用户图片
                     uri = saveToSdCard(photo);
                     updateIcon(uri);
-                    //注册成功
-                    ToastUntil.showShortToast(RegistActivity.this, "注册成功，你现在可以使用该账号了！");
                 } else {
                     ToastUntil.showShortToast(RegistActivity.this, "用户名或电子邮箱已经被另一个用户注册。");
                 }

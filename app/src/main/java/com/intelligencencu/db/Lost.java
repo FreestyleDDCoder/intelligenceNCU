@@ -1,5 +1,7 @@
 package com.intelligencencu.db;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -7,7 +9,7 @@ import cn.bmob.v3.BmobObject;
  * 丢失表
  */
 
-public class Lost extends BmobObject {
+public class Lost extends BmobObject implements Serializable {
     private String title;//标题
     private String describe;//描述
     private String phone;//联系手机

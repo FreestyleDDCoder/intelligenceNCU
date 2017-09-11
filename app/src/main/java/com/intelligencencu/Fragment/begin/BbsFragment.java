@@ -28,6 +28,8 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by liangzhan on 17-4-14.
  * 论坛Fragment
@@ -47,6 +49,7 @@ public class BbsFragment extends Fragment {
     private int curPage = 0;        // 当前页的编号，从0开始
     private ArrayList<BBS> mbbsList;
     private BbsAdapter bbsAdapter;
+    private boolean isFirstLastPosition = true;
 
     @Nullable
     @Override
@@ -95,6 +98,7 @@ public class BbsFragment extends Fragment {
                         //mLostlist = list;
                         // 这里在每次加载完数据后，将当前页码+1，这样在上拉刷新的onPullUpToRefresh方法中就不需要操作curPage了
                         curPage++;
+                        isFirstLastPosition = true;
                     } else if (refreshType == STATE_MORE) {
                         ToastUntil.showShortToast(getActivity(), "没有更多数据了");
                     } else if (refreshType == STATE_REFRESH) {
@@ -130,7 +134,7 @@ public class BbsFragment extends Fragment {
             public void onClick(View v) {
                 if (new IsLogin().isLogin()) {
                     gotoPublish();
-                }else {
+                } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                 }
@@ -152,9 +156,12 @@ public class BbsFragment extends Fragment {
                 if (layoutManager instanceof LinearLayoutManager) {
                     LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
                     int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
-                    if (lastPosition == curPage * count - 1) {
-                        getDate(curPage,STATE_MORE);
-                        ToastUntil.showShortToast(getActivity(), "加载更多ing...");
+                    if (lastPosition == count * curPage - 1) {
+                        if (isFirstLastPosition) {
+                            isFirstLastPosition = false;
+                            ToastUntil.showShortToast(getActivity(), "加载更多ing...");
+                            getDate(curPage, STATE_MORE);
+                        }
                     }
                 }
             }
@@ -164,7 +171,7 @@ public class BbsFragment extends Fragment {
     //前往发表帖子的活动界面
     private void gotoPublish() {
         Intent intent = new Intent(getActivity(), BbsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
     }
 
     private void initView(View view) {
@@ -174,5 +181,16 @@ public class BbsFragment extends Fragment {
         swip_bbs.setColorSchemeResources(R.color.colorPrimary);
         swip_bbs.setRefreshing(true);
         mbbsList = new ArrayList<>();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_OK:
+                Log.d("requestCode", requestCode + "到了这里！");
+                getDate(0, STATE_REFRESH);
+                break;
+        }
     }
 }
