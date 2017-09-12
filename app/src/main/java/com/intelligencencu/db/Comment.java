@@ -8,24 +8,24 @@ import cn.bmob.v3.BmobObject;
  */
 
 public class Comment extends BmobObject {
-    private String desc;
-    private BBS bbs; //所评论的帖子，这里体现的是一对多的关系，一个评论只能属于一个微博
+    private String comment;//评论的内容
+    private BBS post; //所评论的帖子，这里体现的是一对多的关系，一个评论只能属于一个帖子
     private User username;//评论的用户，Pointer类型，一对一关系
 
-    public String getDesc() {
-        return desc;
+    public String getComment() {
+        return comment;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public BBS getBbs() {
-        return bbs;
+    public BBS getPost() {
+        return post;
     }
 
-    public void setBbs(BBS bbs) {
-        this.bbs = bbs;
+    public void setPost(BBS post) {
+        this.post = post;
     }
 
     public User getUsername() {

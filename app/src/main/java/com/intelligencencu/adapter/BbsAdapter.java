@@ -17,15 +17,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.intelligencencu.activity.CommentsActivity;
 import com.intelligencencu.db.BBS;
+import com.intelligencencu.db.Comment;
 import com.intelligencencu.db.User;
 import com.intelligencencu.intelligencencu.R;
 import com.intelligencencu.utils.ToastUntil;
 
 import java.util.List;
 
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -80,7 +83,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         final BBS bbs = mlist.get(position);
         //判断是否匿名消息
         if (bbs.isNoname()) {
@@ -114,7 +117,20 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         holder.bbs_time.setText(bbs.getUpdatedAt());
         holder.tv_bbsdesc.setText(bbs.getDesc());
         holder.tv_likenumber.setText("" + bbs.getLikes());
-        holder.tv_commentnumber.setText("" + bbs.getReview());
+        //查询当前论坛有多少条评论
+        BmobQuery<Comment> query = new BmobQuery<>();
+        query.addWhereEqualTo("post", bbs);
+        query.findObjects(new FindListener<Comment>() {
+            @Override
+            public void done(List<Comment> list, BmobException e) {
+                if (e == null) {
+                    holder.tv_commentnumber.setText(""+list.size());
+                } else {
+                    holder.tv_commentnumber.setText("0");
+                }
+            }
+        });
+
         BmobUser user = BmobUser.getCurrentUser();
         if (user != null) {
             if (user.getUsername().equals(bbs.getUsername().getUsername())) {
@@ -131,7 +147,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //点击删除按钮
-                                deleBbs(bbs);
+                                deleBbs(bbs, position);
                             }
                         });
                         builder.show();
@@ -142,25 +158,27 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
             }
         }
 
-        final String objectId = bbs.getObjectId();
-        Log.d("objectId", objectId);
         holder.bbs_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ToastUntil.showShortToast(mContext, "喜欢功能待续...");
+                ToastUntil.showShortToast(mContext, "喜欢功能待续...");
                 //更新喜欢帖子信息
-                bbs.setLikes(bbs.getLikes() + 1);
-                bbs.update(objectId, new UpdateListener() {
-                    @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            Log.d("喜欢更新成功：", null);
-                            notifyItemChanged(position);
-                        } else {
-                            Log.d("喜欢更新失败：", e.toString());
-                        }
-                    }
-                });
+//                String objectId = bbs.getObjectId();
+//                int likes = bbs.getLikes();
+//                Log.d("objectId", objectId);
+//                BBS bbs1 = new BBS();
+//                bbs1.setLikes(likes + 1);
+//                bbs1.update(objectId, new UpdateListener() {
+//                    @Override
+//                    public void done(BmobException e) {
+//                        if (e == null) {
+//                            Log.d("喜欢更新成功：", null);
+//                            notifyItemChanged(position);
+//                        } else {
+//                            Log.d("喜欢更新失败：", e.toString());
+//                        }
+//                    }
+//                });
             }
         });
 
@@ -196,13 +214,15 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         mContext.startActivity(intent);
     }
 
-    private void deleBbs(BBS bbs) {
+    private void deleBbs(BBS bbs, final int position) {
         BBS bbs1 = new BBS();
         bbs1.setObjectId(bbs.getObjectId());
         bbs1.delete(new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                ToastUntil.showShortToast(mContext, e == null ? "删除成功，请下拉刷新数据！" : "删除失败！" + e);
+                mlist.remove(position);
+                notifyDataSetChanged();
+                ToastUntil.showShortToast(mContext, e == null ? "删除成功！" : "删除失败！" + e);
             }
         });
     }

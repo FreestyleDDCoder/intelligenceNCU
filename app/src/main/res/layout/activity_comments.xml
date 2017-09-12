@@ -11,8 +11,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:layout_scrollFlags="scroll|enterAlways" />
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -161,10 +161,16 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rlv_comment"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swip_comment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rlv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -179,14 +185,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="来评论一句吧"
-            />
+            android:maxLines="4" />
 
         <ImageButton
             android:id="@+id/ib_comments"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:layout_marginRight="10dp"
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
             android:background="@mipmap/fabiao2" />
     </LinearLayout>
 

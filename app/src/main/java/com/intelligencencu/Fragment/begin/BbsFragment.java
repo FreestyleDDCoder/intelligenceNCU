@@ -94,6 +94,7 @@ public class BbsFragment extends Fragment {
                         }
                         for (BBS bbs : list) {
                             mbbsList.add(bbs);
+                            Log.d("BBS", "" + bbs.getObjectId());
                         }
                         //mLostlist = list;
                         // 这里在每次加载完数据后，将当前页码+1，这样在上拉刷新的onPullUpToRefresh方法中就不需要操作curPage了
