@@ -117,6 +117,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
         holder.bbs_time.setText(bbs.getUpdatedAt());
         holder.tv_bbsdesc.setText(bbs.getDesc());
         holder.tv_likenumber.setText("" + bbs.getLikes());
+        holder.tv_commentnumber.setText("0");
         //查询当前论坛有多少条评论
         BmobQuery<Comment> query = new BmobQuery<>();
         query.addWhereEqualTo("post", bbs);
@@ -126,7 +127,7 @@ public class BbsAdapter extends RecyclerView.Adapter<BbsAdapter.ViewHolder> {
                 if (e == null) {
                     holder.tv_commentnumber.setText(""+list.size());
                 } else {
-                    holder.tv_commentnumber.setText("0");
+                    Log.d("Commentquery:查询失败！",e.toString());
                 }
             }
         });
