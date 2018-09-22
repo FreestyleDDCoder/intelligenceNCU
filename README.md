@@ -5,11 +5,11 @@
 <br>Web服务后端的Socket监听服务接收到了用户端的请求后，将请求放入ActiveMQ的请求队列中。ActiveMQ消息队列中间件，支持异步处理，所以服务器可以继续监听其他用户端请求。而CORE业务监听服务监听到请求队列中有消息后，便从请求队列中取出消息，对消息进行拆包，根据需求进行相关的业务和逻辑处理，通过JDBC方式与MySQL进行数据CRUD操作。
 <br>当Web服务器处理完成后，把数据库JDBC操作的结果在CORE业务监听服务封装成Json格式放入ActiveMQ的响应队列中，并且为消息加上用户id标记。Socket监听服务监听到响应队列中有消息后，根据请求的用户端id便从请求队列中取出带有对应标记id的消息，再通过Socket通信给用户端或者管理员端传输回去。当有新消息需要推送给多个用户端时，则在Web服务器与用户端之间数据传输采用mqtt协议，它支持一对多的发布/订阅模式。
 界面效果如下：
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/1.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/2.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/3.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/4.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/5.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/6.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/7.png)
-![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/8.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/1.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/2.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/3.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/4.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/5.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/6.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/7.png)
+<br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/8.png)
