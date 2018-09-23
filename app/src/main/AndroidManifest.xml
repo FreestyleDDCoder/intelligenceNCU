@@ -81,7 +81,13 @@
             android:process=":remote">
 
         </service>
+        <service android:name="com.intelligencencu.service.MqttReceiveService"/>
 
+        <receiver android:name="com.intelligencencu.service.MqttBroadcastReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>  //接收开机启动广播；
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
