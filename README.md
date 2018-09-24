@@ -14,3 +14,5 @@
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/6.png)
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/7.png)
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/8.png)
+<br>![数据传输路径架构](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/9.png)
+<br>![Web服务器端流程图](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/10.png)
