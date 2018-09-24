@@ -7,12 +7,21 @@
 <br>当Web服务器处理完成后，把数据库JDBC操作的结果在CORE业务监听服务封装成Json格式放入ActiveMQ的响应队列中，并且为消息加上用户id标记。Socket监听服务监听到响应队列中有消息后，根据请求的用户端id便从请求队列中取出带有对应标记id的消息，再通过Socket通信给用户端或者管理员端传输回去。当有新消息需要推送给多个用户端时，则在Web服务器与用户端之间数据传输采用mqtt协议，它支持一对多的发布/订阅模式。
 界面效果如下：
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/1.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/2.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/3.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/4.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/5.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/6.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/7.png)
+<br>
 <br>![Alt text](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/8.png)
-<br>![数据传输路径架构](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/9.png)
+<br>数据传输架构:
+<br>![数据传输架构](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/9.png)
+<br>Web服务器端流程图:
 <br>![Web服务器端流程图](https://github.com/liangzhanncu/intelligenceNCU/blob/master/app/src/main/res/mipmap-mdpi/10.png)
